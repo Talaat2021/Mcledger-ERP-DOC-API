@@ -118,7 +118,7 @@
       },
       "post" : {
         "tags" : [ "Company" ],
-        "summary" : "Create New Company",
+        "summary" : "Create New Company.",
         "description" : "create a new company in FA , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
         "requestBody" : {
           "description" : "COMPANY BODY DATA",
