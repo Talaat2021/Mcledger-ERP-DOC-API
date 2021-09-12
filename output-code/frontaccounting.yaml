@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "Frontaccounting API",
-    "description" : "# Intoduction\n FrontAccounting is an open source ERP system , the following apis are a simulation to the erp behaviour but via API requests\n # Authorization\n  FA is coupled with another system (RMS) to request any api we must have 2 things in the header `X-PREFIX` , `AUTH-TOKEN`\n    `X-PREFIX`\n      FA use prefix to identifie any company so we first need to pass that prefix in the Header \n    `AUTH-TOKEN`\n      is RMS bearer token generate from login to rms via main user account to retrieve one please call the following link ` http://104.248.161.120/rms/api/v2/login\n      with body : {\n                 \"email\": \"cybersales@cyberaccounting.ae\",\n                 \"password\": \"123456789\"\n              }\n      `\n",
+    "description" : "# Intoduction\n FrontAccounting is an open source ERP system , the following apis are a simulation to the erp behaviour but via API requests\n # Authorization\n  FA is coupled with another system (RMS) to request any api we must have 2 things in the header `X-PREFIX` , `AUTH-TOKEN`\n    `X-PREFIX`\n      FA use prefix to identifie any company so we first need to pass the prefix in the Header \n    `AUTH-TOKEN`\n      is RMS bearer token generate from login to rms via main user account to retrieve one please call the following link ` http://104.248.161.120/rms/api/v2/login\n      with body : {\n                 \"email\": \"cybersales@cyberaccounting.ae\",\n                 \"password\": \"123456789\"\n              }\n      `\n",
     "contact" : {
       "email" : "talaatmedhat19@gmail.com"
     },
@@ -92,7 +92,7 @@
     "/company" : {
       "get" : {
         "tags" : [ "Company" ],
-        "summary" : "Get Company Setup",
+        "summary" : "Get Company Setup.",
         "description" : "get sales_types , fiscal years , current fiscal year",
         "operationId" : "companySetup",
         "responses" : {
@@ -118,7 +118,7 @@
       },
       "post" : {
         "tags" : [ "Company" ],
-        "summary" : "Create New Company",
+        "summary" : "Create New Company.",
         "description" : "create a new company in FA , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
         "requestBody" : {
           "description" : "COMPANY BODY DATA",
