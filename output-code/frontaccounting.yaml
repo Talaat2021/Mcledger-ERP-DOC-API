@@ -2,21 +2,15 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "Mcledger ERP API",
-    "description" : "# Intoduction\n FrontAccounting is an open source ERP system , the following apis are a simulation to the erp behaviour but via API requests\n # Authorization\n  FA is coupled with another system (RMS) to request any api we must have 2 things in the header `X-PREFIX` , `AUTH-TOKEN`\n    `X-PREFIX`\n      FA use prefix to identifie any company so we first need to pass the prefix in the Header \n    `AUTH-TOKEN`\n      is RMS bearer token generate from login to rms via main user account to retrieve one please call the following link ` http://104.248.161.120/rms/api/v2/login\n      with body : {\n                 \"email\": \"cybersales@cyberaccounting.ae\",\n                 \"password\": \"123456789\"\n              }\n      `\n",
+    "description" : "# Intoduction\n  The following apis are a simulation to the erp behaviour but via API requests\n # Authorization\n  ERP must have 2 params in the header `X-PREFIX` , `AUTH-TOKEN`\n      ERP use prefix to identifie any company so we first need to pass the prefix in the Header \n",
     "contact" : {
-      "email" : "talaatmedhat19@gmail.com"
+      "email" : "talaat.medhat@mcledger.co"
     },
     "version" : "1.0.0-oas3"
   },
   "servers" : [ {
-    "url" : "http://localhost:3001/modules/apiv2/",
-    "description" : "localhost url"
-  }, {
     "url" : "http://104.248.161.120/frontaccounting/modules/apiv2/",
     "description" : "staging server url"
-  }, {
-    "url" : "https://erp.mcledger.co/modules/apiv2/",
-    "description" : "production server"
   } ],
   "tags" : [ {
     "name" : "Company",
@@ -35,7 +29,7 @@
     "description" : "All the operation require to manipulate Items module"
   }, {
     "name" : "Logger",
-    "description" : "All the operation require to manipulate system log in FA ( note this log only works with api requests and it logs in 2 level DB and file )"
+    "description" : "All the operation require to manipulate system log in ERP ( note this log only works with api requests and it logs in 2 level DB and file )"
   }, {
     "name" : "Sales",
     "description" : "All the operation require to manipulate sales module"
@@ -47,7 +41,7 @@
     "description" : "Some statistic apis"
   }, {
     "name" : "Settings",
-    "description" : "getting FA setting required by the api caller"
+    "description" : "getting ERP setting required by the api caller"
   }, {
     "name" : "Scripts",
     "description" : "it's just a group of apis used to generate mysql query to do some manipulation on existing records in the db"
@@ -62,10 +56,10 @@
     "description" : "All the operation require to manipulate Sales Order module"
   }, {
     "name" : "Reports",
-    "description" : "some modified reports in fa and some reports just converted into api withput modification"
+    "description" : "some modified reports in ERP and some reports just converted into api withput modification"
   }, {
     "name" : "Modules",
-    "description" : "Modules represent the FA supported modules transaction like sales , purchase ...etc"
+    "description" : "Modules represent the ERP supported modules transaction like sales , purchase ...etc"
   }, {
     "name" : "Salesman",
     "description" : "All the operation require to manipulate Salesman module"
@@ -119,7 +113,7 @@
       "post" : {
         "tags" : [ "Company" ],
         "summary" : "Create New Company.",
-        "description" : "create a new company in FA , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
+        "description" : "create a new company in ERP , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
         "requestBody" : {
           "description" : "COMPANY BODY DATA",
           "content" : {
@@ -2059,7 +2053,7 @@
       "post" : {
         "tags" : [ "Sales" ],
         "summary" : "Create a sales invoice by robo accountant",
-        "description" : "the main aim of this api is to create transaction in FA using OCR process on request in rms",
+        "description" : "the main aim of this api is to create transaction in ERP using OCR process on request in rms",
         "operationId" : "roboSalesInvoice",
         "requestBody" : {
           "description" : "Robo Invoice creation data",
@@ -2094,7 +2088,7 @@
       "post" : {
         "tags" : [ "Void" ],
         "summary" : "Create a sales invoice by robo accountant",
-        "description" : "the main aim of this api is to create transaction in FA using OCR process on request in rms",
+        "description" : "the main aim of this api is to create transaction in ERP using OCR process on request in rms",
         "operationId" : "voidTransaction",
         "requestBody" : {
           "description" : "Robo Invoice creation data",
@@ -2664,7 +2658,7 @@
       "get" : {
         "tags" : [ "Settings" ],
         "summary" : "Get General Settings",
-        "description" : "get settings of FA , like tax types , accounts , any thing that needed in a form",
+        "description" : "get settings of ERP , like tax types , accounts , any thing that needed in a form",
         "operationId" : "getGeneralSettings",
         "responses" : {
           "200" : {
@@ -3479,7 +3473,7 @@
       "get" : {
         "tags" : [ "Modules" ],
         "summary" : "Get all supported Modules from FA",
-        "description" : "get all the supported modules in FA , with it's links in FA also with it's transaction type , some modules doesn't have so we create a custom number for it , like items/customers/...etc",
+        "description" : "get all the supported modules in ERP , with it's links in ERP also with it's transaction type , some modules doesn't have so we create a custom number for it , like items/customers/...etc",
         "operationId" : "getModules",
         "responses" : {
           "200" : {
@@ -3981,7 +3975,7 @@
         "parameters" : [ {
           "name" : "template_id",
           "in" : "query",
-          "description" : "fa has 3 templates supported to print any kind of transaction , 1 is the default one",
+          "description" : "ERP has 3 templates supported to print any kind of transaction , 1 is the default one",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -4043,7 +4037,7 @@
       "post" : {
         "tags" : [ "User" ],
         "summary" : "Create user",
-        "description" : "Create user in all companies in FA , accountant user some one who will use the system with specific rules , this api generate sql only if you would like and can also execute it internal and give you the output ,  it also update the user data if he exist",
+        "description" : "Create user in all companies in ERP , accountant user some one who will use the system with specific rules , this api generate sql only if you would like and can also execute it internal and give you the output ,  it also update the user data if he exist",
         "operationId" : "createUser",
         "requestBody" : {
           "content" : {
@@ -4566,7 +4560,7 @@
           },
           "dbname" : {
             "type" : "string",
-            "example" : "frontaccounting"
+            "example" : "DBname"
           },
           "collation" : {
             "type" : "string",
@@ -4676,7 +4670,7 @@
           },
           "bank_account" : {
             "type" : "string",
-            "description" : "represent the into bank account in FA , 4 for cash on hand",
+            "description" : "represent the into bank account in ERP , 4 for cash on hand",
             "example" : "4"
           },
           "charge" : {
@@ -5101,7 +5095,7 @@
           },
           "ref" : {
             "type" : "string",
-            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on FA pattern",
+            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
             "example" : "ref-12399-2"
           },
           "payment" : {
@@ -5441,7 +5435,7 @@
           },
           "ref" : {
             "type" : "string",
-            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on FA pattern",
+            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
             "example" : "ref-12399-2"
           },
           "payment" : {
@@ -5499,7 +5493,7 @@
           },
           "ref" : {
             "type" : "string",
-            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on FA pattern",
+            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
             "example" : "ref-12399-2"
           },
           "payment" : {
@@ -5737,7 +5731,7 @@
           },
           "password" : {
             "type" : "string",
-            "description" : "password here will be string but fa will change it to md5 encryption",
+            "description" : "password here will be string but ERP will change it to md5 encryption",
             "example" : "m3M2RfWc_D"
           },
           "role" : {
@@ -5864,7 +5858,8 @@
             "example" : "2018-12-31"
           },
           "reminder_second_due_date" : {
-            "type" : "integer"
+            "type" : "string",
+            "example" : "2018-12-31"
           }
         }
       },
@@ -6226,8 +6221,10 @@
             "example" : 1231
           },
           "refund_date" : {
-            "type" : "integer",
-            "description" : "Refund date"
+            "type" : "string",
+            "description" : "Refund date",
+            "format" : "date",
+            "example" : "2019-06-03"
           }
         }
       },
