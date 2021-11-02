@@ -1,0 +1,4981 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Mcledger RMS API",
+    "description" : "# Intoduction\nThis document provide an interface to communicate with RMS via Restful APIs\n",
+    "contact" : {
+      "email" : "talaatmedhat19@gmail.com"
+    },
+    "version" : "2.0.0-oas3"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/Mc1943/Mcledger-RMS-API/2.0.0-oas3",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "http://localhost:3003/api/v2/",
+    "description" : "localhost url"
+  }, {
+    "url" : "http://104.248.161.120/rms/api/v2/",
+    "description" : "staging server url"
+  }, {
+    "url" : "https://erp.mcledger.co/modules/apiv2",
+    "description" : "production server"
+  } ],
+  "tags" : [ {
+    "name" : "Auth",
+    "description" : "Authentication operations"
+  }, {
+    "name" : "Business",
+    "description" : "All the operation require to manipulate business module."
+  }, {
+    "name" : "User",
+    "description" : "All the operation require to manipulate Users."
+  }, {
+    "name" : "ERP",
+    "description" : "All the operation require to interact with the ERP."
+  }, {
+    "name" : "Membership",
+    "description" : "All the operation require to interact with Memebership."
+  }, {
+    "name" : "Notification",
+    "description" : "All the operation require to manipulate notifications."
+  }, {
+    "name" : "Subscription",
+    "description" : "All the operation require to manipulate subscriptions."
+  }, {
+    "name" : "Request",
+    "description" : "All the operation require to manipulate requests."
+  }, {
+    "name" : "Item",
+    "description" : "All the operation require to manipulate items."
+  }, {
+    "name" : "Dashboard",
+    "description" : "All the operation require to get dashboard summary data."
+  }, {
+    "name" : "Financial Reports",
+    "description" : "All the operation require to get financial reports."
+  }, {
+    "name" : "Shopify",
+    "description" : "Shopify Integrations."
+  } ],
+  "paths" : {
+    "/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Login As Main User.",
+        "description" : "Login Support Only For Main Users.",
+        "operationId" : "loginMainUser",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserAuth"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authenticated User Success.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Register As Main User.",
+        "description" : "Register Support Only For Main Users.",
+        "operationId" : "registerMainUser",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserCreate"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authenticated User Success.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Logout from specific device.",
+        "description" : "Logout from specific device using device ID.",
+        "operationId" : "logoutFromDevice",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserLogout"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/social-register" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Register As Main User Using Social Link.",
+        "description" : "Register Using facebook or apple or google.",
+        "operationId" : "socialRegisterMainUser",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserCreateSocial"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authenticated User Success.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/password/reset" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Reset Password.",
+        "description" : "Reset Password By Sending Email.",
+        "operationId" : "resetPassword",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResetPassword"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/send-verification-email" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "summary" : "Send Verification Mail.",
+        "description" : "Send Verification Mail To Verify The Account.",
+        "operationId" : "verifyEmail",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResetPassword"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_3"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/membership/create-user/{key}" : {
+      "post" : {
+        "tags" : [ "Membership" ],
+        "summary" : "Create Member in membership.",
+        "description" : "Create member in membership.",
+        "operationId" : "createMembership",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "Key of the user to be created.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMember"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_4"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/membership/update-user/{key}" : {
+      "post" : {
+        "tags" : [ "Membership" ],
+        "summary" : "Update Member in membership.",
+        "description" : "Update member in membership.",
+        "operationId" : "updateMembership",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "Key of the user to be created.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMember"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_5"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/allow/erp/login" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Allow ERP Login.",
+        "description" : "Check whether this staff user is allowed to login to erp or not.",
+        "operationId" : "allowERPLogin",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AllowERPLogin"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_6"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/business-creation-info/" : {
+      "post" : {
+        "tags" : [ "Business" ],
+        "summary" : "Get Business Info.",
+        "description" : "Get Business Info Data.",
+        "operationId" : "getBusinessInfo",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_7"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/business-status-timeline/" : {
+      "get" : {
+        "tags" : [ "Business" ],
+        "summary" : "Business Timeline.",
+        "description" : "Get Business Timeline.",
+        "operationId" : "getBusinessStatusTimeline",
+        "parameters" : [ {
+          "name" : "business_id",
+          "in" : "query",
+          "description" : "Business ID.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 912
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_7"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/business-payments/" : {
+      "post" : {
+        "tags" : [ "Business" ],
+        "summary" : "Business Payments.",
+        "description" : "Get Business Payments.",
+        "operationId" : "businessPayments",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateMember"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_7"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/send/hashed/otp" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Send OTP hashed to user.",
+        "description" : "Send hashed otp link to specific mobile number",
+        "operationId" : "sendOTPHashed",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SendHashedOTP"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_8"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/amember-deactivate-business" : {
+      "get" : {
+        "tags" : [ "Membership" ],
+        "summary" : "Deactivate Member from the membership.",
+        "description" : "Deactivate Member from membership.",
+        "operationId" : "deactivateMember",
+        "parameters" : [ {
+          "name" : "am_user_id",
+          "in" : "query",
+          "description" : "user id to be deactivated",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "No Response"
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/create/bulk/credit-notes" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Create Bulk Credit Notes On The ERP.",
+        "description" : "Create a group of credit notes all at once.",
+        "operationId" : "createBulkCreditNotes",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateBulkCreditNotes"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateBulkCreditNotes"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/validate-email" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Validate Email.",
+        "description" : "Validate User Email.",
+        "operationId" : "validateEmail",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AllowERPLogin"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllowERPLogin"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/validate-phone" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Validate Phone",
+        "description" : "Validate Phone Number.",
+        "operationId" : "validatePhone",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SendHashedOTP"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllowERPLogin"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app-settings" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get User Settings.",
+        "description" : "Get user app settings.",
+        "operationId" : "getAppSettings",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_9"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/users/info" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get User Information.",
+        "description" : "Get users informations settings.",
+        "operationId" : "getUserInformation",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_10"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/request/erp/create" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Create Draft Request.",
+        "description" : "Create Draft Request for later user by the ERP.",
+        "operationId" : "erpCreateDraftRequest",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateERPDraftRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_11"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/request/erp/update" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Update Draft Request To Verified.",
+        "description" : "Update Draft Request To Specific Status.",
+        "operationId" : "updateRequestFromERP",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateERPDraftRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_12"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/items/update/amounts" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Update Request Amounts.",
+        "description" : "Update Request Amounts.",
+        "operationId" : "updateRequestAmountsFromERP",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateRequestAmounts"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_12"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/items/update/doc_status" : {
+      "post" : {
+        "tags" : [ "ERP" ],
+        "summary" : "Update document status.",
+        "description" : "Update document status can be converted to void.",
+        "operationId" : "updateDocumentStatus",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateDocStatus"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_13"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/user/verify-prefix" : {
+      "post" : {
+        "tags" : [ "ERP", "User" ],
+        "summary" : "Verify User Prefix.",
+        "description" : "Verify if user has the passed prefix or not",
+        "operationId" : "verifyUserBusinessPrefix",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VerifyPrefix"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_14"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/settings" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get User Settings.",
+        "description" : "Get user settings information.",
+        "operationId" : "getUserSettings",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_15"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/update-sub-user-status" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Update sub user account status.",
+        "description" : "Update sub user account status.",
+        "operationId" : "updateSubUserStatus",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateSubUserStatus"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_16"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/terms-and-conditions" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Get terms and conditions.",
+        "description" : "get terms and conditions in a form of html.",
+        "operationId" : "getTermsConditiions",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_17"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/notification_settings/{id}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Edit Notification Settings Of User.",
+        "description" : "Edit Notification Settings Of User.",
+        "operationId" : "editUserNotificationSettings",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "user id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_18"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/support" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Send Support.",
+        "description" : "Ask for support.",
+        "operationId" : "support.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Support"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_19"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/users/mark-notification-as-read" : {
+      "post" : {
+        "tags" : [ "Notification" ],
+        "summary" : "Mark all notifications as read.",
+        "description" : "Read All Notifications.",
+        "operationId" : "markNotificationAsRead.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NotificationAsRead"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_20"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/subscriptions/subscribe" : {
+      "post" : {
+        "tags" : [ "Subscription" ],
+        "summary" : "Subscribe.",
+        "description" : "Subscribe to specific package.",
+        "operationId" : "subscribe.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Subscribe"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_21"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/subscriptions/upgrade" : {
+      "post" : {
+        "tags" : [ "Subscription" ],
+        "summary" : "Upgrade Subscribe.",
+        "description" : "Upgrade subscriptions.",
+        "operationId" : "upgrade subscribe.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpgradeSubscribe"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_22"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/subscriptions/pay-outstanding-balance" : {
+      "post" : {
+        "tags" : [ "Subscription" ],
+        "summary" : "Pay outstanding balance.",
+        "description" : "Pay outstanding balance.",
+        "operationId" : "payOustandingBalance.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PayOutstanding"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_23"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/add-communication" : {
+      "post" : {
+        "tags" : [ "Request" ],
+        "summary" : "Add Request Communication.",
+        "description" : "Add Request Communication.",
+        "operationId" : "addRequestCommunication.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateRequestCommunication"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_24"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/communication/seen" : {
+      "post" : {
+        "tags" : [ "Request" ],
+        "summary" : "See Request Communication.",
+        "description" : "Set Request Communication As Seen.",
+        "operationId" : "seeRequestCommunication.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SeeRequestCommunication"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_24"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/dashboard/summary" : {
+      "post" : {
+        "tags" : [ "Dashboard" ],
+        "summary" : "Get User Dashboard Summary.",
+        "description" : "Get user Dashboard Summary.",
+        "operationId" : "getDashboardSummary",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/dashboard_summary_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_25"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard/vat-return" : {
+      "post" : {
+        "tags" : [ "Dashboard" ],
+        "summary" : "Get User Dashboard Vat Return.",
+        "description" : "Get user Dashboard Vat Return.",
+        "operationId" : "getDashboardVatReturn",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/dashboard_vatreturn_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_26"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/load" : {
+      "get" : {
+        "tags" : [ "Financial Reports" ],
+        "summary" : "Get Finanical Report.",
+        "description" : "Get Finanical Report as balanceSheet - profitLoss - statementOfAccount -  agedCustomerAnalysis - agedSupplierAnalysis - purchaseReport - salesReport.",
+        "operationId" : "GetFinancialReport",
+        "parameters" : [ {
+          "name" : "report",
+          "in" : "query",
+          "description" : "Report type as string.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "balanceSheet", "profitLoss", "statementOfAccount", "agedCustomerAnalysis", "agedSupplierAnalysis", "purchaseReport", "salesReport" ]
+          }
+        }, {
+          "name" : "business",
+          "in" : "query",
+          "description" : "Business id.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }, {
+          "name" : "from_date",
+          "in" : "query",
+          "description" : "From date report.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-10-12"
+          }
+        }, {
+          "name" : "to_date",
+          "in" : "query",
+          "description" : "To date report.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-10-12"
+          }
+        }, {
+          "name" : "account",
+          "in" : "query",
+          "description" : "For statementOfAccount & it returned in request params api.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "1121"
+          }
+        }, {
+          "name" : "end_date",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-11-15"
+          }
+        }, {
+          "name" : "suppress_zeros",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "0 => no, 1 => yes"
+          }
+        }, {
+          "name" : "sort_col",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only & returned in request params api.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "columnName"
+          }
+        }, {
+          "name" : "sort_term",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only & returned in request params api.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "columnName"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "text/html" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {
+                  "html" : {
+                    "summary" : "Html Report Data.",
+                    "value" : "<html><body><ul><li>item 1</li><li>item 2</li></ul></body></html>"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/export/{type}" : {
+      "get" : {
+        "tags" : [ "Financial Reports" ],
+        "summary" : "Export Finanical Report.",
+        "description" : "Export Finanical Report as balanceSheet - profitLoss - statementOfAccount -  agedCustomerAnalysis - agedSupplierAnalysis - purchaseReport - salesReport.",
+        "operationId" : "ExportFinancialReport",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "path",
+          "description" : "Report type as string.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "excel", "pdf" ]
+          }
+        }, {
+          "name" : "report",
+          "in" : "query",
+          "description" : "Report type as string.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "balanceSheet", "profitLoss", "statementOfAccount", "agedCustomerAnalysis", "agedSupplierAnalysis", "purchaseReport", "salesReport" ]
+          }
+        }, {
+          "name" : "business",
+          "in" : "query",
+          "description" : "Business id.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }, {
+          "name" : "from_date",
+          "in" : "query",
+          "description" : "From date report.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-10-12"
+          }
+        }, {
+          "name" : "to_date",
+          "in" : "query",
+          "description" : "To date report.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-10-12"
+          }
+        }, {
+          "name" : "account",
+          "in" : "query",
+          "description" : "For statementOfAccount & it returned in request params api.",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "1121"
+          }
+        }, {
+          "name" : "end_date",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2020-11-15"
+          }
+        }, {
+          "name" : "suppress_zeros",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "0 => no, 1 => yes"
+          }
+        }, {
+          "name" : "sort_col",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only & returned in request params api.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "columnName"
+          }
+        }, {
+          "name" : "sort_term",
+          "in" : "query",
+          "description" : "For agedCustomerAnalysis & agedSupplierAnalysis types only & returned in request params api.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "columnName"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A PDF|Excel file.",
+            "content" : {
+              "application/pdf" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/item-communication/{id}" : {
+      "get" : {
+        "tags" : [ "Request" ],
+        "summary" : "Get Item Communications.",
+        "description" : "Get Item Communication messages.",
+        "operationId" : "getItemCommunication.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "item id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_27"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/params/" : {
+      "get" : {
+        "tags" : [ "Request" ],
+        "summary" : "Get Request Params.",
+        "description" : "Get Request Information needed.",
+        "operationId" : "getRequestParams.",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_28"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests" : {
+      "post" : {
+        "tags" : [ "Request" ],
+        "summary" : "Create New Request.",
+        "description" : "Create New Request.",
+        "operationId" : "createNewRequest.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_29"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/{id}" : {
+      "get" : {
+        "tags" : [ "Request" ],
+        "summary" : "Get Request Details.",
+        "description" : "Get Request Details.",
+        "operationId" : "getRequestInfo.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "request id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_30"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Request" ],
+        "summary" : "Update Request.",
+        "description" : "Update Request.",
+        "operationId" : "updateRequest.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "request id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Request"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_29"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/" : {
+      "get" : {
+        "tags" : [ "Request" ],
+        "summary" : "Get All Requests.",
+        "description" : "Show all requests.",
+        "operationId" : "getRequests.",
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_29"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Request" ],
+        "summary" : "Delete Request.",
+        "description" : "Delete Request.",
+        "operationId" : "deleteRequest.",
+        "parameters" : [ {
+          "name" : "delete_request_id",
+          "in" : "query",
+          "description" : "request ID",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_31"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/item/{id}" : {
+      "get" : {
+        "tags" : [ "Item" ],
+        "summary" : "Show Request Item.",
+        "description" : "Show Item Details.",
+        "operationId" : "showItemDetails.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Item ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_32"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/items/update/{id}" : {
+      "post" : {
+        "tags" : [ "Item" ],
+        "summary" : "Update Item.",
+        "description" : "Update Item.",
+        "operationId" : "updateItem.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Item ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_32"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/items/upload/{id}" : {
+      "post" : {
+        "tags" : [ "Item" ],
+        "summary" : "Upload Item.",
+        "description" : "Upload Item.",
+        "operationId" : "UploadItem.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Item ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_32"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/requests/items/delete/{id}" : {
+      "get" : {
+        "tags" : [ "Item" ],
+        "summary" : "Delete Item.",
+        "description" : "Delete Item.",
+        "operationId" : "deleteItem.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Item ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 2929
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_33"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/shopifyStoreInfo" : {
+      "get" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Shopify Store Info.",
+        "description" : "Shopify Store Info.",
+        "operationId" : "getStoreInfo.",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/SyncProductCreate" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync Product Create.",
+        "description" : "Sync Product Create.",
+        "operationId" : "SyncProductCreate.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/SyncCreateCustomers" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync Customer Create.",
+        "description" : "Sync Customer Create.",
+        "operationId" : "SyncCustomerCreate.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/https://developer.yodlee.com/auth/token" : {
+      "post" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Authentications",
+        "description" : "Bank Integration with yodlee -> https://developer.yodlee.com/api-reference#tag/Auth",
+        "operationId" : "authYodlee",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/accounts" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Accounts",
+        "description" : "Get Bank Accounts  with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeBankAccounts",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/transactions" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Transactions",
+        "description" : "Get Transactions  with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeTransactions",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/transactions/count\"" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Transactions Count.",
+        "description" : "Get Count Of Transactions  with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeTransactions Count",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/accounts/{id}" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Account Details.",
+        "description" : "Get bank account details  with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeShowBankAccounts",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Account ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Delete Account.",
+        "description" : "Delete bank account with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeDeleteBankAccounts",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Account ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/accounts/historicalBalances\"" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Historical Balances.",
+        "description" : "Get Historical Balanceswith yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeHistoricalBalances",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/https://developer.yodlee.com/derived/transactionSummary\"" : {
+      "get" : {
+        "tags" : [ "Yodlee" ],
+        "summary" : "Bank Integration Total Summary Balance.",
+        "description" : "Get Total Summary Balance with yodlee -> https://developer.yodlee.com/api-reference",
+        "operationId" : "yodleeTotalSummaryBalances",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/SyncProductUpdate" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync Customer Update.",
+        "description" : "Sync Customer Update.",
+        "operationId" : "SyncCustomerUpdate.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/SyncNewOrders" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync New Orders .",
+        "description" : "Sync New Orders.",
+        "operationId" : "SyncNewOrders.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/SyncCreditThis" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync Credit Notes .",
+        "description" : "Sync Credit Notes.",
+        "operationId" : "syncCreditNotes.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    },
+    "/SyncVoidOrder" : {
+      "post" : {
+        "tags" : [ "Shopify" ],
+        "summary" : "Sync Void Order.",
+        "description" : "Sync Void Order.",
+        "operationId" : "syncVoidOrder.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateShopifySync"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_34"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_401"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "UserAuth" : {
+        "required" : [ "email", "passowrd" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "cybersales@cyberaccounting.ae"
+          },
+          "password" : {
+            "example" : 128288282
+          }
+        }
+      },
+      "UserCreate" : {
+        "required" : [ "email", "first_name", "last_name", "password", "password_confirmation" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "cybersales@cyberaccounting.ae"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "128288282"
+          },
+          "mobile" : {
+            "type" : "string",
+            "example" : "202022083"
+          },
+          "password_confirmation" : {
+            "type" : "string",
+            "example" : "128288282"
+          },
+          "is_mobile_verified" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AuthError" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "example" : 400
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Unauthorized request",
+            "example" : "Invalid Email Or Password"
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "UserLogout" : {
+        "required" : [ "deviceId" ],
+        "type" : "object",
+        "properties" : {
+          "deviceId" : {
+            "type" : "string",
+            "example" : "828jjk298"
+          }
+        }
+      },
+      "UserCreateSocial" : {
+        "required" : [ "social_id" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "cybersales@cyberaccounting.ae"
+          },
+          "social_id" : {
+            "type" : "string",
+            "example" : "128288282"
+          },
+          "social_type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ResetPassword" : {
+        "required" : [ "email" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "mcledger@mcledger.com"
+          }
+        }
+      },
+      "CreateMember" : {
+        "required" : [ "email", "first_name", "last_name", "password" ],
+        "type" : "object",
+        "properties" : {
+          "first_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "Talaat"
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "cybersales@cyberaccounting.ae"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "128288282"
+          }
+        }
+      },
+      "AllowERPLogin" : {
+        "required" : [ "email" ],
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "talaatmedhat19@example.com"
+          }
+        }
+      },
+      "BusinessService" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "DEMO"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Trail Balance"
+          },
+          "price" : {
+            "type" : "integer",
+            "example" : 0
+          },
+          "is_recurring" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "created_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          }
+        }
+      },
+      "BusinessSector" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Test"
+          },
+          "created_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          }
+        }
+      },
+      "BusinessType" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Dubai"
+          },
+          "created_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          }
+        }
+      },
+      "Emirate" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Dubai"
+          },
+          "created_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          },
+          "updated_at" : {
+            "type" : "string",
+            "example" : "2019-10-06 02:14:55"
+          }
+        }
+      },
+      "SendHashedOTP" : {
+        "required" : [ "mobile" ],
+        "type" : "object",
+        "properties" : {
+          "mobile" : {
+            "type" : "string",
+            "example" : "1043843822"
+          }
+        }
+      },
+      "CreateBulkCreditNotes" : {
+        "type" : "object",
+        "properties" : {
+          "15" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CreateBulkCreditNotes_15"
+            }
+          }
+        }
+      },
+      "CreateERPDraftRequest" : {
+        "required" : [ "prefix", "reference", "transaction_method" ],
+        "type" : "object",
+        "properties" : {
+          "prefix" : {
+            "example" : 18
+          },
+          "transaction_method" : {
+            "example" : 1
+          },
+          "reference" : {
+            "example" : "28282/20121"
+          }
+        }
+      },
+      "UpdateERPDraftRequest" : {
+        "required" : [ "file", "item_no", "request_no", "status" ],
+        "type" : "object",
+        "properties" : {
+          "request_no" : {
+            "example" : 2828
+          },
+          "item_no" : {
+            "example" : 1292
+          },
+          "file" : {
+            "description" : "this must be a file with a form data",
+            "example" : "file.jpg"
+          },
+          "status" : {
+            "example" : 6
+          }
+        }
+      },
+      "Request" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 20
+          },
+          "request_no" : {
+            "example" : "R2828"
+          },
+          "user_id" : {
+            "example" : 20
+          },
+          "business_id" : {
+            "example" : 1292
+          },
+          "category_id" : {
+            "example" : 2
+          },
+          "transaction_method_id" : {
+            "example" : 6
+          },
+          "status" : {
+            "example" : 1292
+          },
+          "admin_id" : {
+            "example" : 2
+          },
+          "checked_by" : { },
+          "checked_date" : { }
+        }
+      },
+      "UpdateRequestAmounts" : {
+        "type" : "object",
+        "properties" : {
+          "item_no" : {
+            "example" : 20
+          },
+          "vat_amount" : {
+            "example" : "R2828"
+          },
+          "tota_amount" : {
+            "example" : 20
+          },
+          "trans_type" : {
+            "example" : 10
+          },
+          "amount" : {
+            "example" : 220
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 20
+          },
+          "first_name" : {
+            "example" : "Talaat"
+          },
+          "last_name" : {
+            "example" : "Medhat"
+          },
+          "full_name" : {
+            "example" : "Khaled"
+          },
+          "mobile" : {
+            "example" : 92838129
+          },
+          "email" : {
+            "example" : "talaat@talaat.com"
+          },
+          "picture" : {
+            "example" : "http://localhost:3003/img/default-profile-picture.png"
+          },
+          "is_sub" : {
+            "example" : false
+          },
+          "verified" : {
+            "example" : 1
+          },
+          "is_mobile_verified" : {
+            "example" : 0
+          },
+          "pin_code" : { },
+          "subUsers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SubUser"
+            }
+          },
+          "businesses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Business"
+            }
+          },
+          "notifications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Notifications"
+            }
+          },
+          "notification_settings" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/NotificationSettings"
+            }
+          },
+          "permissions" : { },
+          "demo_product_id" : {
+            "example" : 1
+          },
+          "online" : {
+            "example" : false
+          },
+          "credit" : {
+            "example" : 0
+          },
+          "outstanding_balance" : {
+            "example" : 1975.23
+          },
+          "total" : {
+            "example" : 1975.02
+          },
+          "payments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Payment"
+            }
+          }
+        }
+      },
+      "SubUser" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 20
+          },
+          "first_name" : {
+            "example" : "Talaat"
+          },
+          "last_name" : {
+            "example" : "Medhat"
+          },
+          "full_name" : {
+            "example" : "Khaled"
+          },
+          "mobile" : {
+            "example" : 92838129
+          },
+          "email" : {
+            "example" : "talaat@talaat.com"
+          },
+          "picture" : {
+            "example" : "http://localhost:3003/img/default-profile-picture.png"
+          },
+          "is_sub" : {
+            "example" : false
+          },
+          "verified" : {
+            "example" : 1
+          },
+          "is_mobile_verified" : {
+            "example" : 0
+          },
+          "pin_code" : { },
+          "permissions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SubUser_permissions"
+            }
+          }
+        }
+      },
+      "Business" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 20
+          },
+          "am_user_id" : {
+            "example" : 69
+          },
+          "name" : {
+            "example" : "Medhat"
+          },
+          "type" : {
+            "example" : "type"
+          },
+          "business_sector_id" : {
+            "example" : 1
+          },
+          "business_sector_name" : {
+            "example" : "TMT"
+          },
+          "service_type" : {
+            "example" : "Type2"
+          },
+          "status" : {
+            "example" : 1
+          },
+          "erp_company_prefix" : {
+            "example" : 1
+          },
+          "currency" : {
+            "example" : "AED"
+          },
+          "enable_invoice_app" : {
+            "example" : true
+          },
+          "subscriptions" : {
+            "example" : [ ]
+          },
+          "package" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "Notifications" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : "282820-ksas-222"
+          },
+          "message" : {
+            "example" : "TMT sent message"
+          },
+          "request_id" : {
+            "example" : 20
+          },
+          "date" : {
+            "example" : "2019-08-31 -3:51 PM"
+          },
+          "deep_link" : {
+            "example" : "communications/1546/2084"
+          }
+        }
+      },
+      "NotificationSettings" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : "282820-ksas-222"
+          },
+          "name" : {
+            "example" : "Reset Pin Code"
+          },
+          "required" : {
+            "example" : 1
+          },
+          "channels" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/NotificationSettings_channels"
+            }
+          }
+        }
+      },
+      "Payment" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "example" : "26 Jan 2020"
+          },
+          "invoice" : {
+            "example" : "LB30k"
+          },
+          "product" : {
+            "example" : "VAT"
+          },
+          "payment_way" : {
+            "example" : "checkout-com"
+          },
+          "amount" : {
+            "example" : 27.0
+          },
+          "currency" : {
+            "example" : "AED"
+          },
+          "donwload_url" : {
+            "example" : "http://demo.picwpost.com/download_invoice.php=aFZuQVRPZ003VngvZlE2b3FvMngxZz09&payment_id"
+          }
+        }
+      },
+      "UpdateSubUserStatus" : {
+        "required" : [ "status", "sub_user_id" ],
+        "type" : "object",
+        "properties" : {
+          "sub_user_id" : {
+            "example" : 5
+          },
+          "status" : {
+            "example" : 1
+          }
+        }
+      },
+      "UpdateDocStatus" : {
+        "required" : [ "status", "sub_user_id" ],
+        "type" : "object",
+        "properties" : {
+          "item_no" : {
+            "example" : 5
+          },
+          "request_no" : {
+            "example" : 1
+          },
+          "doc_status" : {
+            "example" : 5
+          },
+          "trans_no" : {
+            "example" : 1
+          },
+          "type_no" : {
+            "example" : 1
+          }
+        }
+      },
+      "ErpTrans" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 5
+          },
+          "item_id" : {
+            "example" : 1
+          },
+          "trans_type" : {
+            "example" : 5
+          },
+          "user_id" : {
+            "example" : 1
+          },
+          "isMaster" : {
+            "example" : 1
+          },
+          "trans_no" : {
+            "example" : 1
+          },
+          "name" : {
+            "example" : "Sales Invoice"
+          },
+          "link" : {
+            "example" : "sales/view/view_invoice.php?trans_no=651&trans_type=10"
+          },
+          "document_ref" : {
+            "example" : "233/12"
+          },
+          "document_date" : {
+            "example" : "2021-09-07"
+          },
+          "document_status" : {
+            "example" : "1"
+          },
+          "gl_trans_count" : { },
+          "checked" : {
+            "example" : 1
+          },
+          "checked_at" : {
+            "example" : "2021-09-07 15:47:32"
+          },
+          "checked_by_id" : {
+            "example" : 1
+          },
+          "erp_prefix" : {
+            "example" : "579_"
+          },
+          "isAuto" : {
+            "example" : 1
+          },
+          "voided_by_id" : { },
+          "voided_at" : { }
+        }
+      },
+      "VerifyPrefix" : {
+        "required" : [ "status", "sub_user_id" ],
+        "type" : "object",
+        "properties" : {
+          "prefix" : {
+            "example" : 454
+          }
+        }
+      },
+      "NotificationAsRead" : {
+        "required" : [ "notification_id" ],
+        "type" : "object",
+        "properties" : {
+          "notification_id" : {
+            "example" : "afc8c11d-a7ae-4322-99f9-572c135af863"
+          }
+        }
+      },
+      "Subscribe" : {
+        "required" : [ "need_validation", "payment_system" ],
+        "type" : "object",
+        "properties" : {
+          "payment_system" : {
+            "example" : "Paypal"
+          },
+          "need_validation" : {
+            "example" : "1"
+          }
+        }
+      },
+      "UpgradeSubscribe" : {
+        "type" : "object",
+        "properties" : {
+          "business_id" : {
+            "example" : 1
+          },
+          "business_name" : {
+            "example" : "TMT"
+          },
+          "business_service_type_id" : {
+            "example" : 1
+          },
+          "business_sector_id" : {
+            "example" : "TMT"
+          },
+          "business_description" : {
+            "example" : "desc."
+          },
+          "business_address" : {
+            "example" : "address"
+          }
+        }
+      },
+      "PayOutstanding" : {
+        "type" : "object",
+        "properties" : {
+          "business_id" : {
+            "example" : 1
+          },
+          "token" : {
+            "example" : "TMTasd 2 2d2d2wdadads-%#@#ASDASD"
+          }
+        }
+      },
+      "CreateRequestCommunication" : {
+        "type" : "object",
+        "properties" : {
+          "request_item" : {
+            "example" : 2162
+          },
+          "message" : {
+            "example" : "Please check."
+          }
+        }
+      },
+      "SeeRequestCommunication" : {
+        "type" : "object",
+        "properties" : {
+          "request_item_id" : {
+            "example" : 2162
+          },
+          "comm_type" : {
+            "example" : "test"
+          }
+        }
+      },
+      "Item" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 2162
+          },
+          "request_id" : {
+            "example" : 2085
+          },
+          "request_item_id" : {
+            "example" : 2929
+          },
+          "from_user_id" : {
+            "example" : 29
+          },
+          "to_user_id" : {
+            "example" : 39
+          },
+          "message" : {
+            "example" : "TMT"
+          },
+          "seen" : {
+            "example" : 0
+          },
+          "seen_at" : { },
+          "reason_id" : { },
+          "type" : {
+            "example" : "text"
+          },
+          "sender_picture" : {
+            "example" : "http://www.test.com/picture"
+          },
+          "sender_name" : {
+            "example" : "Admin 0TMT"
+          }
+        }
+      },
+      "Support" : {
+        "required" : [ "message", "name", "subject" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "example" : "Talaat"
+          },
+          "subject" : {
+            "example" : "Subject"
+          },
+          "message" : {
+            "example" : "Help Me!"
+          }
+        }
+      },
+      "CreateShopifySync" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 1
+          },
+          "title" : {
+            "example" : "Talaat"
+          },
+          "body_html" : {
+            "example" : "<p> hiASD<ASDF?ASdfSA?Dfsa"
+          },
+          "vendor" : {
+            "example" : "ACme"
+          },
+          "product_type" : {
+            "example" : "TMT"
+          },
+          "handle" : {
+            "example" : "tedd-ss"
+          },
+          "template_suffix" : {
+            "example" : "test"
+          },
+          "status" : {
+            "example" : "active"
+          },
+          "tags" : {
+            "example" : "example, mens, t-shirt"
+          },
+          "admin_graphql_api_id" : {
+            "example" : "gid://shopify/Product/788032119674292922"
+          }
+        }
+      },
+      "inline_response_200" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_data"
+          }
+        }
+      },
+      "inline_response_200_1" : {
+        "properties" : {
+          "message" : {
+            "example" : "Logged Out Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_2" : {
+        "properties" : {
+          "message" : {
+            "example" : "We have e-mailed your password reset link!"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_401" : {
+        "properties" : {
+          "message" : {
+            "example" : "Unauthenticated"
+          },
+          "code" : {
+            "example" : 401
+          }
+        }
+      },
+      "inline_response_200_3" : {
+        "properties" : {
+          "message" : {
+            "example" : "Verification Mail Has Been Sent To Talaatmedhat19@gmail.com"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_4" : {
+        "properties" : {
+          "message" : {
+            "example" : "New user has been created successfully!"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_5" : {
+        "properties" : {
+          "message" : {
+            "example" : "User has been updated successfully!"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_6" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_6_data"
+          }
+        }
+      },
+      "inline_response_200_7" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_7_data"
+          }
+        }
+      },
+      "inline_response_200_8" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_8_data"
+          }
+        }
+      },
+      "inline_response_200_9" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_9_data"
+          }
+        }
+      },
+      "inline_response_200_10" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "inline_response_200_11" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_11_data"
+          }
+        }
+      },
+      "inline_response_200_12" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Request"
+            }
+          }
+        }
+      },
+      "inline_response_200_13" : {
+        "properties" : {
+          "message" : {
+            "example" : "Status Updated Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/ErpTrans"
+          }
+        }
+      },
+      "inline_response_200_14" : {
+        "properties" : {
+          "message" : {
+            "example" : "User Verified Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_15" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_15_data"
+            }
+          }
+        }
+      },
+      "inline_response_200_16" : {
+        "properties" : {
+          "message" : {
+            "example" : "Account updated successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_17" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_17_data"
+          }
+        }
+      },
+      "inline_response_200_18" : {
+        "properties" : {
+          "message" : {
+            "example" : "Notification Settings Updated."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_19" : {
+        "properties" : {
+          "message" : {
+            "example" : "Message sent successfully"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_20" : {
+        "properties" : {
+          "message" : {
+            "example" : "Notification has been marked as read."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_21" : {
+        "properties" : {
+          "message" : {
+            "example" : "Subscription has been made successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_22" : {
+        "properties" : {
+          "message" : {
+            "example" : "Upgrade has been made successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_23" : {
+        "properties" : {
+          "message" : {
+            "example" : "Outstanding balance has been made successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_24" : {
+        "properties" : {
+          "message" : {
+            "example" : "Messages seen successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "dashboard_summary_body" : {
+        "required" : [ "business_id" ],
+        "type" : "object",
+        "properties" : {
+          "business_id" : {
+            "example" : 5
+          }
+        }
+      },
+      "inline_response_200_25" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_25_data"
+            }
+          }
+        }
+      },
+      "dashboard_vatreturn_body" : {
+        "required" : [ "business_id" ],
+        "type" : "object",
+        "properties" : {
+          "business_id" : {
+            "example" : 5
+          }
+        }
+      },
+      "inline_response_200_26" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_26_data"
+            }
+          }
+        }
+      },
+      "inline_response_200_27" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "inline_response_200_28" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_28_data"
+          }
+        }
+      },
+      "inline_response_200_29" : {
+        "properties" : {
+          "message" : {
+            "example" : "Request Created Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_30" : {
+        "properties" : {
+          "message" : {
+            "example" : "Request Created Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_30_data"
+          }
+        }
+      },
+      "inline_response_200_31" : {
+        "properties" : {
+          "message" : {
+            "example" : "Request Deleted Successfully."
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_32" : {
+        "properties" : {
+          "message" : {
+            "example" : ""
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Item"
+          }
+        }
+      },
+      "inline_response_200_33" : {
+        "properties" : {
+          "message" : {
+            "example" : "Item Deleted Successfully!"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "example" : [ ]
+          }
+        }
+      },
+      "inline_response_200_34" : {
+        "properties" : {
+          "message" : {
+            "example" : "Synced successfully"
+          },
+          "code" : {
+            "example" : 200
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/CreateShopifySync"
+          }
+        }
+      },
+      "CreateBulkCreditNotes_15" : {
+        "properties" : {
+          "tran_date" : {
+            "example" : "2020-08-10T00:00:00.000+0000"
+          },
+          "tran_no" : {
+            "example" : 2929
+          },
+          "reference" : {
+            "example" : "28282/20121"
+          },
+          "net_amount" : {
+            "example" : 200
+          },
+          "chipping_charge" : {
+            "example" : 200
+          }
+        }
+      },
+      "SubUser_review_all_business_requests" : {
+        "properties" : {
+          "name" : {
+            "example" : "Review all business requests"
+          },
+          "value" : {
+            "example" : 0
+          }
+        }
+      },
+      "SubUser_permissions" : {
+        "properties" : {
+          "review_all_business_requests" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SubUser_review_all_business_requests"
+            }
+          }
+        }
+      },
+      "NotificationSettings_channels" : {
+        "properties" : {
+          "id" : {
+            "example" : 28
+          },
+          "name" : {
+            "example" : "Email"
+          },
+          "required" : {
+            "example" : 1
+          },
+          "enabled" : {
+            "example" : 1
+          }
+        }
+      },
+      "inline_response_200_data" : {
+        "type" : "object",
+        "properties" : {
+          "access_token" : {
+            "example" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjBhYjgyYjI0ZDkyMzVk"
+          },
+          "token_type" : {
+            "example" : "Bearer"
+          },
+          "expires_at" : {
+            "example" : "2021-10-13 13:02:20"
+          }
+        }
+      },
+      "inline_response_200_6_data" : {
+        "type" : "object",
+        "properties" : {
+          "allowed" : {
+            "example" : true
+          }
+        }
+      },
+      "inline_response_200_7_data" : {
+        "type" : "object",
+        "properties" : {
+          "business_services" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BusinessService"
+            }
+          },
+          "sectors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BusinessSector"
+            }
+          },
+          "types" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BusinessType"
+            }
+          },
+          "emirate" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Emirate"
+            }
+          },
+          "online" : {
+            "example" : true
+          }
+        }
+      },
+      "inline_response_200_8_data" : {
+        "type" : "object",
+        "properties" : {
+          "hashed_otp" : {
+            "example" : "123938#$jdj@3838"
+          }
+        }
+      },
+      "inline_response_200_9_data" : {
+        "type" : "object",
+        "properties" : {
+          "applied_login_status" : {
+            "example" : true
+          },
+          "google_login_status" : {
+            "example" : true
+          }
+        }
+      },
+      "inline_response_200_11_data" : {
+        "type" : "object",
+        "properties" : {
+          "request_id" : {
+            "example" : 2077
+          },
+          "item_id" : {
+            "example" : 2828
+          }
+        }
+      },
+      "inline_response_200_15_data" : {
+        "properties" : {
+          "email" : {
+            "example" : "talaat@mcledger.com"
+          },
+          "supportEmail" : {
+            "example" : "talaat@support.com"
+          },
+          "subUsers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SubUser"
+            }
+          }
+        }
+      },
+      "inline_response_200_17_data" : {
+        "type" : "object",
+        "properties" : {
+          "terms" : {
+            "example" : "<p><strong>Terms and Conditions</strong></p>"
+          }
+        }
+      },
+      "inline_response_200_25_request_stats" : {
+        "type" : "object",
+        "properties" : {
+          "pendingApprovalCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "pendingProcessingCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "inProcessCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "needReworkCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "verifiedCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "draftCount" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "checkedCount" : {
+            "type" : "string",
+            "example" : "1"
+          }
+        }
+      },
+      "inline_response_200_25_businessFinancialDetails" : {
+        "type" : "object",
+        "properties" : {
+          "maxExpenseBalance" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "monthlyExpenses" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "monthlyRevenue" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "totalReceivables" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "totalPayables" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "cost" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "totalExpenses" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "operatingExpenses" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "payroll" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "costRatio" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "operatingRatio" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "payrollRatio" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpTagsTopExpenses" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpTagsBalances" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpBankCashBalances" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpAccountTotals" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpTagsSummary" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "erpTagsMonthlyRevenueExpenses" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "defaultCurrency" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "defaultPrecision" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "fin_ratios" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "bank_accounts" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "fiscal_years" : {
+            "type" : "string",
+            "example" : "1"
+          }
+        }
+      },
+      "inline_response_200_25_data" : {
+        "properties" : {
+          "selectedBusinessId" : {
+            "example" : 1
+          },
+          "request_stats" : {
+            "$ref" : "#/components/schemas/inline_response_200_25_request_stats"
+          },
+          "businessFinancialDetails" : {
+            "$ref" : "#/components/schemas/inline_response_200_25_businessFinancialDetails"
+          },
+          "business_status" : {
+            "example" : "please check your demo business!"
+          },
+          "cash_flow" : {
+            "example" : "array of cash flow items from erp"
+          }
+        }
+      },
+      "inline_response_200_26_statuses" : {
+        "properties" : {
+          "id" : {
+            "example" : 1
+          },
+          "client_status" : {
+            "example" : "In Process"
+          },
+          "done" : {
+            "example" : "0 OR 1"
+          }
+        }
+      },
+      "inline_response_200_26_data" : {
+        "properties" : {
+          "VatPeriodDateFrom" : {
+            "example" : "2020-12-10"
+          },
+          "VatPeriodDateTo" : {
+            "example" : "2020-12-10"
+          },
+          "salesAmount" : {
+            "example" : 1500
+          },
+          "purchaseAmount" : {
+            "example" : 1500
+          },
+          "salesTax" : {
+            "example" : 1500
+          },
+          "purchaseTax" : {
+            "example" : 1500
+          },
+          "payableTax" : {
+            "example" : 1500
+          },
+          "salesCount" : {
+            "example" : 1500
+          },
+          "purchaseCount" : {
+            "example" : 1500
+          },
+          "default_currency" : {
+            "example" : "AED"
+          },
+          "statuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_26_statuses"
+            }
+          }
+        }
+      },
+      "inline_response_200_28_data_businesses" : {
+        "properties" : {
+          "id" : {
+            "example" : 10
+          },
+          "name" : {
+            "example" : "TMT"
+          }
+        }
+      },
+      "inline_response_200_28_data_categories" : {
+        "properties" : {
+          "id" : {
+            "example" : 10
+          },
+          "category_name" : {
+            "example" : "TMT"
+          }
+        }
+      },
+      "inline_response_200_28_data_transactionMethods" : {
+        "properties" : {
+          "id" : {
+            "example" : 10
+          },
+          "transaction_method_name" : {
+            "example" : "Bank Transfer"
+          }
+        }
+      },
+      "inline_response_200_28_data_statuses" : {
+        "properties" : {
+          "id" : {
+            "example" : 10
+          },
+          "display_name" : {
+            "example" : "Bank Transfer"
+          }
+        }
+      },
+      "inline_response_200_28_data_fields" : {
+        "properties" : {
+          "type" : {
+            "example" : 1
+          },
+          "name" : {
+            "example" : "From Date"
+          },
+          "key" : {
+            "example" : "from_date"
+          },
+          "mandatory" : {
+            "example" : false
+          }
+        }
+      },
+      "inline_response_200_28_data_reports" : {
+        "properties" : {
+          "name" : {
+            "example" : 10
+          },
+          "key" : {
+            "example" : "balanceSheet"
+          },
+          "fields" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_fields"
+            }
+          }
+        }
+      },
+      "inline_response_200_28_data" : {
+        "type" : "object",
+        "properties" : {
+          "businesses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_businesses"
+            }
+          },
+          "categories" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_categories"
+            }
+          },
+          "transactionMethods" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_transactionMethods"
+            }
+          },
+          "statuses" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_statuses"
+            }
+          },
+          "requestItemFileBaseUrl" : {
+            "example" : ""
+          },
+          "supportEmail" : {
+            "example" : ""
+          },
+          "supportPhone" : {
+            "example" : ""
+          },
+          "supportAddress" : {
+            "example" : ""
+          },
+          "supportLocationLat" : {
+            "example" : ""
+          },
+          "supportLocationLong" : {
+            "example" : ""
+          },
+          "reports" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/inline_response_200_28_data_reports"
+            }
+          }
+        }
+      },
+      "inline_response_200_30_data" : {
+        "type" : "object",
+        "properties" : {
+          "request" : {
+            "$ref" : "#/components/schemas/Request"
+          },
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Item"
+            }
+          }
+        }
+      }
+    },
+    "responses" : {
+      "400" : {
+        "description" : "Bad Request.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/AuthError"
+            }
+          }
+        }
+      },
+      "401" : {
+        "description" : "Unauthorized.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_401"
+            }
+          }
+        }
+      },
+      "DashboardSummary" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_25"
+            }
+          }
+        }
+      },
+      "UserAuth" : {
+        "description" : "Authenticated User Success.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200"
+            }
+          }
+        }
+      },
+      "UserLogout" : {
+        "description" : "Success.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_1"
+            }
+          }
+        }
+      },
+      "ResetPassword" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_2"
+            }
+          }
+        }
+      },
+      "VerifyEmail" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_3"
+            }
+          }
+        }
+      },
+      "CreateMember" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_4"
+            }
+          }
+        }
+      },
+      "UpdateMember" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_5"
+            }
+          }
+        }
+      },
+      "AllowERPLogin" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_6"
+            }
+          }
+        }
+      },
+      "BusinessInfo" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_7"
+            }
+          }
+        }
+      },
+      "SendHashedOTP" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_8"
+            }
+          }
+        }
+      },
+      "AppSettings" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_9"
+            }
+          }
+        }
+      },
+      "CreateERPDraftRequest" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_11"
+            }
+          }
+        }
+      },
+      "UpdateERPDraftRequest" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_12"
+            }
+          }
+        }
+      },
+      "UpdateRequestAmounts" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_12"
+            }
+          }
+        }
+      },
+      "UserInfo" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_10"
+            }
+          }
+        }
+      },
+      "UserSettings" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_15"
+            }
+          }
+        }
+      },
+      "UpdateSubUserStatus" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_16"
+            }
+          }
+        }
+      },
+      "UpdateDocStatus" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_13"
+            }
+          }
+        }
+      },
+      "VerifyPrefix" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_14"
+            }
+          }
+        }
+      },
+      "UserNotificationSettings" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_18"
+            }
+          }
+        }
+      },
+      "NotificationAsRead" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_20"
+            }
+          }
+        }
+      },
+      "Subscribe" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_21"
+            }
+          }
+        }
+      },
+      "UpgradeSubscribe" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_22"
+            }
+          }
+        }
+      },
+      "PayOutstanding" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_23"
+            }
+          }
+        }
+      },
+      "ItemCommunication" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_27"
+            }
+          }
+        }
+      },
+      "SeeRequestCommunication" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_24"
+            }
+          }
+        }
+      },
+      "Request" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_29"
+            }
+          }
+        }
+      },
+      "DeleteRequest" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_31"
+            }
+          }
+        }
+      },
+      "RequestInfo" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_30"
+            }
+          }
+        }
+      },
+      "Item" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_32"
+            }
+          }
+        }
+      },
+      "DeleteItem" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_33"
+            }
+          }
+        }
+      },
+      "Term" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_17"
+            }
+          }
+        }
+      },
+      "Support" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_19"
+            }
+          }
+        }
+      },
+      "CreateShopifySync" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_34"
+            }
+          }
+        }
+      },
+      "RequestParams" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_28"
+            }
+          }
+        }
+      },
+      "DashboardVatReturn" : {
+        "description" : "OK.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_200_26"
+            }
+          }
+        }
+      },
+      "DefaultReportResponse" : {
+        "description" : "OK.",
+        "content" : {
+          "text/html" : {
+            "schema" : {
+              "type" : "string"
+            },
+            "examples" : {
+              "html" : {
+                "summary" : "Html Report Data.",
+                "value" : "<html><body><ul><li>item 1</li><li>item 2</li></ul></body></html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "business" : {
+        "name" : "business",
+        "in" : "query",
+        "description" : "Business id.",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "example" : 1
+        }
+      },
+      "fromDate" : {
+        "name" : "from_date",
+        "in" : "query",
+        "description" : "From date report.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "example" : "2020-10-12"
+        }
+      },
+      "toDate" : {
+        "name" : "to_date",
+        "in" : "query",
+        "description" : "To date report.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "example" : "2020-10-12"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "TokenSecured" : {
+        "type" : "apiKey",
+        "description" : "Example : Bearer jasdjgsdfii39393...",
+        "name" : "Authorization",
+        "in" : "header"
+      }
+    }
+  }
+}
