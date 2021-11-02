@@ -35,7 +35,7 @@
     "description" : "All the operation require to manipulate sales module"
   }, {
     "name" : "Void",
-    "description" : "Void Transaction is like deleteing one in FA"
+    "description" : "Void Transaction is like deleteing one in ERP"
   }, {
     "name" : "Dashboard",
     "description" : "Some statistic apis"
@@ -683,6 +683,7 @@
         "parameters" : [ {
           "name" : "customer_id",
           "in" : "path",
+          "description" : "debtor_no in the db",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -765,7 +766,7 @@
       "get" : {
         "tags" : [ "Customers" ],
         "summary" : "Get All Customers Names.",
-        "description" : "Get customers names with reference and",
+        "description" : "Get customers names with reference",
         "operationId" : "getCustomerNames",
         "responses" : {
           "200" : {
@@ -4523,7 +4524,7 @@
           },
           "dbname" : {
             "type" : "string",
-            "example" : "DBname"
+            "example" : "ERP"
           },
           "collation" : {
             "type" : "string",
@@ -4535,7 +4536,7 @@
           },
           "coa" : {
             "type" : "string",
-            "example" : "en_Standard_BKK_564.sql\""
+            "example" : "en_5_BKEmptyCompany.sql"
           }
         }
       },
