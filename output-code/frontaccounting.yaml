@@ -53,10 +53,10 @@
     "description" : "All the operation require to manipulate Sales Order module"
   }, {
     "name" : "Reports",
-    "description" : "some modified reports in ERP and some reports just converted into api withput modification"
+    "description" : "some modified reports in ERP and some reports just converted into api without modification"
   }, {
     "name" : "Modules",
-    "description" : "Modules represent the ERP supported modules transaction like sales , purchase ...etc"
+    "description" : "Modules represent the ERP supported modules transaction like sales ,purchase ...etc"
   }, {
     "name" : "Salesman",
     "description" : "All the operation require to manipulate Salesman module"
@@ -110,7 +110,7 @@
       "post" : {
         "tags" : [ "Company" ],
         "summary" : "Create New Company.",
-        "description" : "create a new company in ERP , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
+        "description" : "create a new company in ERP , it's append the new credentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
         "requestBody" : {
           "description" : "COMPANY BODY DATA",
           "content" : {
@@ -186,7 +186,7 @@
       "get" : {
         "tags" : [ "Company" ],
         "summary" : "Get Company Invoice State",
-        "description" : "get company templates , templates that create the structure of a company",
+        "description" : "Get company Invoice state, 1 for enabled , 0 for disabled.",
         "operationId" : "companyInvoiceState",
         "responses" : {
           "200" : {
@@ -525,9 +525,9 @@
         "description" : "Get list of the customers.",
         "operationId" : "getCustomers",
         "parameters" : [ {
-          "name" : "debtor",
+          "name" : "keyword",
           "in" : "query",
-          "description" : "customer id filter",
+          "description" : "filter by one of Keyword values (debtor_no,customer name, address, company name, customer email, customer phone)",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -596,7 +596,7 @@
         "description" : "Add new customer with default branch",
         "operationId" : "addCustomer",
         "requestBody" : {
-          "description" : "name and address  , ...tc",
+          "description" : "name and address  , ...etc",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -766,7 +766,7 @@
       "get" : {
         "tags" : [ "Customers" ],
         "summary" : "Get All Customers Names.",
-        "description" : "Get customers names with reference",
+        "description" : "Get customers names with reference (company Name)",
         "operationId" : "getCustomerNames",
         "responses" : {
           "200" : {
@@ -842,7 +842,7 @@
       "get" : {
         "tags" : [ "Customer Payment", "Customer Credit Note" ],
         "summary" : "Get all Customer Payments.",
-        "description" : "get all the customer payments  , it's also retrieve the Credit Notes with it",
+        "description" : "get all the customer payments  , it's also retrieve the Credit Notes with it depend on type parameter",
         "operationId" : "getCustomerPayments",
         "parameters" : [ {
           "name" : "page",
@@ -952,7 +952,7 @@
         "parameters" : [ {
           "name" : "payment_no",
           "in" : "path",
-          "description" : "payment_no represent the trans_no of the customer payment",
+          "description" : "payment_no represent the trans_no (in DB) of the customer payment",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -986,7 +986,7 @@
       "get" : {
         "tags" : [ "Customer Payment" ],
         "summary" : "Print Receipt Template.",
-        "description" : "This api return an html view without any body just html",
+        "description" : "This api return an html view wit receipt data without any body just html",
         "operationId" : "printReceipt",
         "parameters" : [ {
           "name" : "payment_no",
@@ -1304,7 +1304,7 @@
       "put" : {
         "tags" : [ "Suppliers" ],
         "summary" : "Update Supplier",
-        "description" : "Update Supplier u need to add person_id with it's person id to update him",
+        "description" : "Update Supplier you need to add person_id with it's person id to update him",
         "operationId" : "updateSupplier",
         "parameters" : [ {
           "name" : "supplier_id",
@@ -1502,7 +1502,7 @@
         "parameters" : [ {
           "name" : "stock_id",
           "in" : "path",
-          "description" : "item details",
+          "description" : "update item details",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -1577,48 +1577,6 @@
       }
     },
     "/inventory/multi" : {
-      "put" : {
-        "tags" : [ "Items" ],
-        "summary" : "Update Multiple Items.",
-        "description" : "Update Multiple Items At Once.",
-        "operationId" : "updateMultiItems",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/UpdateMultiItem"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "201" : {
-            "description" : "Item Updated Successfully Response",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/responses/CreateItems"
-                }
-              }
-            }
-          },
-          "412" : {
-            "description" : "Precondition Failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/responses/FailedCreateItem"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "TokenSecured" : [ ]
-        }, {
-          "X-PREFIX" : [ ]
-        } ]
-      },
       "post" : {
         "tags" : [ "Items" ],
         "summary" : "Create Multiple Items.",
@@ -1662,11 +1620,55 @@
         } ]
       }
     },
+    "/inventory/edit-Multi" : {
+      "put" : {
+        "tags" : [ "Items" ],
+        "summary" : "Update Multiple Items.",
+        "description" : "Update Multiple Items At Once.",
+        "operationId" : "updateMultiItems",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateMultiItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Item Updated Successfully Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/CreateItems"
+                }
+              }
+            }
+          },
+          "412" : {
+            "description" : "Precondition Failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/FailedCreateItem"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
     "/log" : {
       "get" : {
         "tags" : [ "Logger" ],
         "summary" : "Show Logs.",
-        "description" : "show logs on the api level only , any transaction made by api would belogged in the db table so we can retrieve it",
+        "description" : "show logs on the api level only , any transaction made by api would be logged in the db table so we can retrieve it",
         "operationId" : "getLogs",
         "parameters" : [ {
           "name" : "page",
@@ -1806,7 +1808,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -2085,11 +2087,11 @@
     "/void" : {
       "post" : {
         "tags" : [ "Void" ],
-        "summary" : "Create a sales invoice by robo accountant",
-        "description" : "the main aim of this api is to create transaction in ERP using OCR process on request in rms",
+        "summary" : "void transaction",
+        "description" : "the main aim of this api is to void (delete) specific transaction",
         "operationId" : "voidTransaction",
         "requestBody" : {
-          "description" : "Robo Invoice creation data",
+          "description" : "void transaction",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -2198,7 +2200,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -2722,7 +2724,7 @@
     "/pwp-request/{item_no}" : {
       "put" : {
         "tags" : [ "PWP-REQUESTS" ],
-        "summary" : "Get General Settings.",
+        "summary" : "update PWP requests.",
         "description" : "pwp requests is a table that tied ub the audit trail id with rms request and items , this api update pwp requests fields",
         "operationId" : "updatePWPRequests",
         "parameters" : [ {
@@ -3298,7 +3300,7 @@
       "get" : {
         "tags" : [ "Reports" ],
         "summary" : "Detailed Balance Report",
-        "description" : "Purchase Report",
+        "description" : "Detailed Balance Report",
         "operationId" : "detailedBalanceReport",
         "parameters" : [ {
           "name" : "start_date",
@@ -3909,7 +3911,7 @@
       "get" : {
         "tags" : [ "Delivery Note" ],
         "summary" : "Show All Delivery Notes.",
-        "description" : "get all devlivery notes",
+        "description" : "get all delivery notes",
         "operationId" : "getDeliveryNotes",
         "parameters" : [ {
           "name" : "limit",
@@ -4015,7 +4017,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/responses/BankAccounts"
+                  "$ref" : "#/responses/BankAccount"
                 }
               }
             }
@@ -4067,7 +4069,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -4134,11 +4136,21 @@
           "name" : "type",
           "in" : "query",
           "description" : "Filter with Purchase type -> invoices or orders",
-          "required" : false,
+          "required" : true,
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "integer"
+            "type" : "string"
+          }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Filter with Purchase status -> all is default",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
           }
         } ],
         "responses" : {
@@ -4446,7 +4458,7 @@
           "style" : "simple",
           "explode" : false,
           "schema" : {
-            "type" : "integer"
+            "type" : "string"
           },
           "example" : "USD"
         } ],
