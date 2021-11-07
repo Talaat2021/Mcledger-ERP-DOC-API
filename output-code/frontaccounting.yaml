@@ -533,7 +533,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 102
         }, {
           "name" : "page",
           "in" : "query",
@@ -652,7 +653,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 102
         } ],
         "responses" : {
           "200" : {
@@ -689,7 +691,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 109
         } ],
         "requestBody" : {
           "description" : "customer data body",
@@ -738,7 +741,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 109
         } ],
         "responses" : {
           "200" : {
@@ -877,7 +881,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "tmt"
         }, {
           "name" : "tran_date_from",
           "in" : "query",
@@ -909,7 +914,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 11
         }, {
           "name" : "item_id",
           "in" : "query",
@@ -958,7 +964,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 98
         } ],
         "responses" : {
           "200" : {
@@ -991,12 +998,14 @@
         "parameters" : [ {
           "name" : "payment_no",
           "in" : "path",
+          "description" : "payment_no represents the trans_no (in DB) of the customer payment",
           "required" : true,
           "style" : "simple",
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 98
         } ],
         "responses" : {
           "200" : {
@@ -1138,7 +1147,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 100
         } ],
         "requestBody" : {
           "description" : "Allocate payment details",
@@ -1278,7 +1288,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 292
         } ],
         "responses" : {
           "200" : {
@@ -1314,7 +1325,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 292
         } ],
         "requestBody" : {
           "$ref" : "#/components/requestBodies/Supplier"
@@ -1471,7 +1483,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 411110
         } ],
         "responses" : {
           "200" : {
@@ -1508,7 +1521,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 411110
         } ],
         "requestBody" : {
           "content" : {
@@ -1838,7 +1852,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "tmt negm"
         }, {
           "name" : "customer_id",
           "in" : "query",
@@ -1852,13 +1867,14 @@
         }, {
           "name" : "paid",
           "in" : "query",
-          "description" : "filter whether the invoice paid or not",
+          "description" : "filter by paid value (all=>all invoice status,0 =>unpaid,1=>paid,2=>credit,3=>overdue,)",
           "required" : false,
           "style" : "form",
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : "all"
         }, {
           "name" : "item_id",
           "in" : "query",
@@ -1951,7 +1967,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 114
         } ],
         "responses" : {
           "200" : {
@@ -1990,7 +2007,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 114
         }, {
           "name" : "template_id",
           "in" : "query",
@@ -2000,7 +2018,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -2552,7 +2571,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 661
         } ],
         "responses" : {
           "200" : {
@@ -2697,7 +2717,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 58
         } ],
         "responses" : {
           "200" : {
@@ -2736,7 +2757,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 58
         } ],
         "requestBody" : {
           "content" : {
@@ -2820,7 +2842,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         } ],
         "requestBody" : {
           "content" : {
@@ -2868,7 +2891,8 @@
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
+          },
+          "example" : "2021-07-1"
         }, {
           "name" : "to_date",
           "in" : "query",
@@ -2878,7 +2902,8 @@
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
+          },
+          "example" : "2021-09-30"
         } ],
         "responses" : {
           "200" : {
@@ -3357,7 +3382,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 30
         } ],
         "responses" : {
           "200" : {
@@ -3391,7 +3417,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 30
         } ],
         "responses" : {
           "200" : {
@@ -3552,7 +3579,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "Bilal"
         } ],
         "responses" : {
           "200" : {
@@ -3626,7 +3654,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 2
         }, {
           "name" : "from_date",
           "in" : "query",
@@ -3683,7 +3712,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 2
         } ],
         "requestBody" : {
           "content" : {
@@ -3835,7 +3865,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 44
         } ],
         "responses" : {
           "200" : {
@@ -3874,7 +3905,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 119
         } ],
         "requestBody" : {
           "content" : {
@@ -3981,7 +4013,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         }, {
           "name" : "delivery_no",
           "in" : "path",
@@ -3991,7 +4024,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 112
         } ],
         "responses" : {
           "200" : {
@@ -4017,7 +4051,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/responses/BankAccount"
+                  "$ref" : "#/responses/BankAccounts"
                 }
               }
             }
@@ -4141,7 +4175,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "invoices"
         }, {
           "name" : "status",
           "in" : "query",
@@ -4151,7 +4186,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "all"
         } ],
         "responses" : {
           "200" : {
@@ -4576,11 +4612,11 @@
         "properties" : {
           "name" : {
             "type" : "string",
-            "example" : "tmt negm"
+            "example" : "msh alouda"
           },
           "address" : {
             "type" : "string",
-            "example" : "tmt address"
+            "example" : "alouda address"
           },
           "curr_code" : {
             "type" : "string",
@@ -4592,20 +4628,20 @@
           },
           "phone" : {
             "type" : "string",
-            "example" : "11218532"
+            "example" : "1121853232"
           },
           "phone2" : {
             "type" : "string",
-            "example" : "11218532"
+            "example" : "1121853232"
           },
           "email" : {
             "type" : "string",
-            "example" : "mcledger@mcledger.com"
+            "example" : "mcledgeralouda@mcledger.com"
           },
           "cust_ref" : {
             "type" : "string",
             "description" : "customer reference must be unique each time",
-            "example" : "reftmt992a"
+            "example" : "refalouda"
           },
           "sales_type" : {
             "type" : "string",
@@ -4652,12 +4688,12 @@
           "charge" : {
             "type" : "string",
             "description" : "represent the bank charge if exist , but take care bank charge and amount mustn't be the same",
-            "example" : "200"
+            "example" : ""
           },
           "amount" : {
             "type" : "string",
             "description" : "represent the customer payment amount",
-            "example" : "1000"
+            "example" : "2000"
           },
           "DateBanked" : {
             "type" : "string",
@@ -4667,7 +4703,7 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id that we craete the customer payment from",
-            "example" : 161
+            "example" : 109
           },
           "memo_" : {
             "type" : "string",
@@ -4677,12 +4713,12 @@
           "amount0" : {
             "type" : "string",
             "description" : "amount0 represent the first amount of the invoice we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have amout[0-3]",
-            "example" : "100"
+            "example" : ""
           },
           "un_allocated0" : {
             "type" : "string",
             "description" : "un_allocated0 represent the first un_allocated amount or the remaining of the invoice  we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have un_allocated[0-3] , you must get this information from get sales invoice api before start to allocate",
-            "example" : "400"
+            "example" : ""
           }
         }
       },
@@ -4698,7 +4734,7 @@
           "trans_no" : {
             "type" : "integer",
             "description" : "the payment we want to allocate amounts from",
-            "example" : 904
+            "example" : 98
           },
           "trans_type" : {
             "type" : "integer",
@@ -4713,7 +4749,7 @@
           "debtor_no" : {
             "type" : "integer",
             "description" : "customer id that we craete the customer payment from",
-            "example" : 161
+            "example" : 109
           },
           "amount0" : {
             "type" : "string",
@@ -4733,12 +4769,12 @@
         "properties" : {
           "supp_name" : {
             "type" : "string",
-            "example" : "tmt supplier"
+            "example" : "ahmad supplier"
           },
           "supp_ref" : {
             "type" : "string",
             "description" : "supplier reference",
-            "example" : "tmt-sup-ref123"
+            "example" : "ahmad-sup-ref123"
           },
           "bank_account" : {
             "type" : "string",
@@ -4768,7 +4804,7 @@
           "address" : {
             "type" : "string",
             "description" : "mailing address of the supplier",
-            "example" : "tmt@tmt.com "
+            "example" : "ahmad@mcledger.com "
           },
           "supp_address" : {
             "type" : "string",
@@ -5006,7 +5042,7 @@
           },
           "stock_id" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "41111"
           },
           "curr_abrev" : {
             "type" : "string",
@@ -5026,11 +5062,11 @@
         "properties" : {
           "price" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "99"
           },
           "stock_id" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "411110"
           },
           "curr_abrev" : {
             "type" : "string",
@@ -5062,7 +5098,7 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id",
-            "example" : 161
+            "example" : 109
           },
           "deliver_to" : {
             "type" : "string",
@@ -5072,7 +5108,7 @@
           "ref" : {
             "type" : "string",
             "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
-            "example" : "ref-12399-2"
+            "example" : "099/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -5333,11 +5369,11 @@
           "stock_id" : {
             "type" : "string",
             "description" : "the id of the item",
-            "example" : "1001"
+            "example" : "41122"
           },
           "quantity" : {
             "type" : "integer",
-            "description" : "qunatity of the sales item",
+            "description" : "Valet Parking",
             "example" : 1
           },
           "price" : {
@@ -5348,7 +5384,7 @@
           "discount" : {
             "type" : "string",
             "description" : "discount of the item",
-            "example" : "100"
+            "example" : "10"
           }
         },
         "description" : "line items of the invoices or any transactions"
@@ -5360,12 +5396,12 @@
           "trans_no" : {
             "type" : "string",
             "description" : "the transaction number of the target void transaction",
-            "example" : "42"
+            "example" : "113"
           },
           "type_no" : {
             "type" : "integer",
             "description" : "determine the type of the voided transaction",
-            "example" : 0
+            "example" : 10
           }
         }
       },
@@ -5504,7 +5540,7 @@
           "request_no" : {
             "type" : "integer",
             "description" : "the rms request no , the new  value in request_no column",
-            "example" : 123
+            "example" : 58
           }
         },
         "description" : "update the pwp request fields"
@@ -5527,7 +5563,7 @@
           "salesman_name" : {
             "type" : "string",
             "description" : "the name of the saleman",
-            "example" : "TMT SALESPERSON"
+            "example" : "Ahmad SALESPERSON"
           },
           "provision" : {
             "type" : "integer",
@@ -5544,17 +5580,17 @@
           "salesman_phone" : {
             "type" : "string",
             "description" : "the phone number of the saleman",
-            "example" : "10926"
+            "example" : "1092600"
           },
           "salesman_email" : {
             "type" : "string",
             "description" : "the email of the saleman",
-            "example" : "TMT@SALESPERSON.com"
+            "example" : "ahmad@SALESPERSON.com"
           },
           "salesman_fax" : {
             "type" : "string",
             "description" : "the fax of the saleman",
-            "example" : "TMT FAX"
+            "example" : "ahmad FAX"
           }
         },
         "description" : "add new salesman data"
@@ -5565,7 +5601,7 @@
           "salesman_name" : {
             "type" : "string",
             "description" : "the name of the saleman",
-            "example" : "TMT SALESPERSON"
+            "example" : "ahmad SALESPERSON"
           },
           "provision" : {
             "type" : "integer",
@@ -5582,17 +5618,17 @@
           "salesman_phone" : {
             "type" : "string",
             "description" : "the phone number of the saleman",
-            "example" : "10926"
+            "example" : "1092800"
           },
           "salesman_email" : {
             "type" : "string",
             "description" : "the email of the saleman",
-            "example" : "TMT@SALESPERSON.com"
+            "example" : "ahmad@SALESPERSON.com"
           },
           "salesman_fax" : {
             "type" : "string",
             "description" : "the fax of the saleman",
-            "example" : "TMT FAX"
+            "example" : "ahmad FAX"
           }
         },
         "description" : "add new salesman data"
@@ -6194,13 +6230,12 @@
           "bank_account" : {
             "type" : "integer",
             "description" : "Refund Bank Account",
-            "example" : 1231
+            "example" : 15
           },
           "refund_date" : {
             "type" : "string",
             "description" : "Refund date",
-            "format" : "date",
-            "example" : "2019-06-03"
+            "format" : "date"
           }
         }
       },
@@ -6353,7 +6388,7 @@
           "sales_type" : {
             "type" : "string",
             "description" : "price before/after tax",
-            "example" : "1"
+            "example" : "2"
           },
           "payment_terms" : {
             "type" : "string",
