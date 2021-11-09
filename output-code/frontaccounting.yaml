@@ -53,10 +53,10 @@
     "description" : "All the operation require to manipulate Sales Order module"
   }, {
     "name" : "Reports",
-    "description" : "some modified reports in ERP and some reports just converted into api withput modification"
+    "description" : "some modified reports in ERP and some reports just converted into api without modification"
   }, {
     "name" : "Modules",
-    "description" : "Modules represent the ERP supported modules transaction like sales , purchase ...etc"
+    "description" : "Modules represent the ERP supported modules transaction like sales ,purchase ...etc"
   }, {
     "name" : "Salesman",
     "description" : "All the operation require to manipulate Salesman module"
@@ -78,6 +78,15 @@
   }, {
     "name" : "Currency",
     "description" : "All the operation require to manipulate Currency"
+  }, {
+    "name" : "Depreciation",
+    "description" : "Handle process depreciation for Fixed Assets"
+  }, {
+    "name" : "Amortization",
+    "description" : "All actions related to manage Revenue/Cost Accruals"
+  }, {
+    "name" : "Fixed Assets",
+    "description" : "Manage fixed asset items, along with items and fixed asset purchases"
   } ],
   "paths" : {
     "/company" : {
@@ -110,7 +119,7 @@
       "post" : {
         "tags" : [ "Company" ],
         "summary" : "Create New Company.",
-        "description" : "create a new company in ERP , it's append the new caredentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
+        "description" : "create a new company in ERP , it's append the new credentials in config_db.php and create a new tables with the last prefix exist plus 1\n",
         "requestBody" : {
           "description" : "COMPANY BODY DATA",
           "content" : {
@@ -186,7 +195,7 @@
       "get" : {
         "tags" : [ "Company" ],
         "summary" : "Get Company Invoice State",
-        "description" : "get company templates , templates that create the structure of a company",
+        "description" : "Get company Invoice state, 1 for enabled , 0 for disabled.",
         "operationId" : "companyInvoiceState",
         "responses" : {
           "200" : {
@@ -525,15 +534,16 @@
         "description" : "Get list of the customers.",
         "operationId" : "getCustomers",
         "parameters" : [ {
-          "name" : "debtor",
+          "name" : "keyword",
           "in" : "query",
-          "description" : "customer id filter",
+          "description" : "filter by one of Keyword values (debtor_no,customer name, address, company name, customer email, customer phone)",
           "required" : false,
           "style" : "form",
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 102
         }, {
           "name" : "page",
           "in" : "query",
@@ -596,7 +606,7 @@
         "description" : "Add new customer with default branch",
         "operationId" : "addCustomer",
         "requestBody" : {
-          "description" : "name and address  , ...tc",
+          "description" : "name and address  , ...etc",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -652,7 +662,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 102
         } ],
         "responses" : {
           "200" : {
@@ -689,7 +700,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 109
         } ],
         "requestBody" : {
           "description" : "customer data body",
@@ -738,7 +750,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 109
         } ],
         "responses" : {
           "200" : {
@@ -766,7 +779,7 @@
       "get" : {
         "tags" : [ "Customers" ],
         "summary" : "Get All Customers Names.",
-        "description" : "Get customers names with reference",
+        "description" : "Get customers names with reference (company Name)",
         "operationId" : "getCustomerNames",
         "responses" : {
           "200" : {
@@ -842,7 +855,7 @@
       "get" : {
         "tags" : [ "Customer Payment", "Customer Credit Note" ],
         "summary" : "Get all Customer Payments.",
-        "description" : "get all the customer payments  , it's also retrieve the Credit Notes with it",
+        "description" : "get all the customer payments  , it's also retrieve the Credit Notes with it depend on type parameter",
         "operationId" : "getCustomerPayments",
         "parameters" : [ {
           "name" : "page",
@@ -877,7 +890,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "tmt"
         }, {
           "name" : "tran_date_from",
           "in" : "query",
@@ -909,7 +923,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 11
         }, {
           "name" : "item_id",
           "in" : "query",
@@ -952,13 +967,14 @@
         "parameters" : [ {
           "name" : "payment_no",
           "in" : "path",
-          "description" : "payment_no represent the trans_no of the customer payment",
+          "description" : "payment_no represent the trans_no (in DB) of the customer payment",
           "required" : true,
           "style" : "simple",
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 98
         } ],
         "responses" : {
           "200" : {
@@ -986,17 +1002,19 @@
       "get" : {
         "tags" : [ "Customer Payment" ],
         "summary" : "Print Receipt Template.",
-        "description" : "This api return an html view without any body just html",
+        "description" : "This api return an html view wit receipt data without any body just html",
         "operationId" : "printReceipt",
         "parameters" : [ {
           "name" : "payment_no",
           "in" : "path",
+          "description" : "payment_no represents the trans_no (in DB) of the customer payment",
           "required" : true,
           "style" : "simple",
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 98
         } ],
         "responses" : {
           "200" : {
@@ -1138,7 +1156,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 100
         } ],
         "requestBody" : {
           "description" : "Allocate payment details",
@@ -1278,7 +1297,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 292
         } ],
         "responses" : {
           "200" : {
@@ -1304,7 +1324,7 @@
       "put" : {
         "tags" : [ "Suppliers" ],
         "summary" : "Update Supplier",
-        "description" : "Update Supplier u need to add person_id with it's person id to update him",
+        "description" : "Update Supplier you need to add person_id with it's person id to update him",
         "operationId" : "updateSupplier",
         "parameters" : [ {
           "name" : "supplier_id",
@@ -1314,7 +1334,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 292
         } ],
         "requestBody" : {
           "$ref" : "#/components/requestBodies/Supplier"
@@ -1344,10 +1365,20 @@
     "/inventory" : {
       "get" : {
         "tags" : [ "Items" ],
-        "summary" : "Get Items List.",
+        "summary" : "Get Items List normal and fixed assets.",
         "description" : "Return all the items supported for the company.",
         "operationId" : "getItems",
         "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "description" : "To identify type of returned items all/items/fixed_assets",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "order",
           "in" : "query",
           "description" : "order by DESC or ASC  with supplier id",
@@ -1415,8 +1446,8 @@
       },
       "post" : {
         "tags" : [ "Items" ],
-        "summary" : "Create New Item",
-        "description" : "Create New Item",
+        "summary" : "Create New Item / Fixed asstes",
+        "description" : "Create New Item for sales/purchase, or create a fixed asset items",
         "operationId" : "addItem",
         "requestBody" : {
           "content" : {
@@ -1471,7 +1502,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 411110
         } ],
         "responses" : {
           "200" : {
@@ -1502,13 +1534,14 @@
         "parameters" : [ {
           "name" : "stock_id",
           "in" : "path",
-          "description" : "item details",
+          "description" : "update item details",
           "required" : true,
           "style" : "simple",
           "explode" : false,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 411110
         } ],
         "requestBody" : {
           "content" : {
@@ -1577,48 +1610,6 @@
       }
     },
     "/inventory/multi" : {
-      "put" : {
-        "tags" : [ "Items" ],
-        "summary" : "Update Multiple Items.",
-        "description" : "Update Multiple Items At Once.",
-        "operationId" : "updateMultiItems",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/UpdateMultiItem"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "201" : {
-            "description" : "Item Updated Successfully Response",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/responses/CreateItems"
-                }
-              }
-            }
-          },
-          "412" : {
-            "description" : "Precondition Failed.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/responses/FailedCreateItem"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "TokenSecured" : [ ]
-        }, {
-          "X-PREFIX" : [ ]
-        } ]
-      },
       "post" : {
         "tags" : [ "Items" ],
         "summary" : "Create Multiple Items.",
@@ -1662,11 +1653,55 @@
         } ]
       }
     },
+    "/inventory/edit-Multi" : {
+      "put" : {
+        "tags" : [ "Items" ],
+        "summary" : "Update Multiple Items.",
+        "description" : "Update Multiple Items At Once.",
+        "operationId" : "updateMultiItems",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateMultiItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Item Updated Successfully Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/CreateItems"
+                }
+              }
+            }
+          },
+          "412" : {
+            "description" : "Precondition Failed.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/FailedCreateItem"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
     "/log" : {
       "get" : {
         "tags" : [ "Logger" ],
         "summary" : "Show Logs.",
-        "description" : "show logs on the api level only , any transaction made by api would belogged in the db table so we can retrieve it",
+        "description" : "show logs on the api level only , any transaction made by api would be logged in the db table so we can retrieve it",
         "operationId" : "getLogs",
         "parameters" : [ {
           "name" : "page",
@@ -1806,7 +1841,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -1836,7 +1871,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "tmt negm"
         }, {
           "name" : "customer_id",
           "in" : "query",
@@ -1850,13 +1886,14 @@
         }, {
           "name" : "paid",
           "in" : "query",
-          "description" : "filter whether the invoice paid or not",
+          "description" : "filter by paid value (all=>all invoice status,0 =>unpaid,1=>paid,2=>credit,3=>overdue,)",
           "required" : false,
           "style" : "form",
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : "all"
         }, {
           "name" : "item_id",
           "in" : "query",
@@ -1949,7 +1986,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 114
         } ],
         "responses" : {
           "200" : {
@@ -1988,7 +2026,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 114
         }, {
           "name" : "template_id",
           "in" : "query",
@@ -1998,7 +2037,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         } ],
         "responses" : {
           "200" : {
@@ -2085,11 +2125,11 @@
     "/void" : {
       "post" : {
         "tags" : [ "Void" ],
-        "summary" : "Create a sales invoice by robo accountant",
-        "description" : "the main aim of this api is to create transaction in ERP using OCR process on request in rms",
+        "summary" : "void transaction",
+        "description" : "the main aim of this api is to void (delete) specific transaction",
         "operationId" : "voidTransaction",
         "requestBody" : {
-          "description" : "Robo Invoice creation data",
+          "description" : "void transaction",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -2198,7 +2238,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -2550,7 +2590,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : 661
         } ],
         "responses" : {
           "200" : {
@@ -2695,7 +2736,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 58
         } ],
         "responses" : {
           "200" : {
@@ -2722,7 +2764,7 @@
     "/pwp-request/{item_no}" : {
       "put" : {
         "tags" : [ "PWP-REQUESTS" ],
-        "summary" : "Get General Settings.",
+        "summary" : "update PWP requests.",
         "description" : "pwp requests is a table that tied ub the audit trail id with rms request and items , this api update pwp requests fields",
         "operationId" : "updatePWPRequests",
         "parameters" : [ {
@@ -2734,7 +2776,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 58
         } ],
         "requestBody" : {
           "content" : {
@@ -2818,7 +2861,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         } ],
         "requestBody" : {
           "content" : {
@@ -2866,7 +2910,8 @@
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
+          },
+          "example" : "2021-07-1"
         }, {
           "name" : "to_date",
           "in" : "query",
@@ -2876,7 +2921,8 @@
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
+          },
+          "example" : "2021-09-30"
         } ],
         "responses" : {
           "200" : {
@@ -3298,7 +3344,7 @@
       "get" : {
         "tags" : [ "Reports" ],
         "summary" : "Detailed Balance Report",
-        "description" : "Purchase Report",
+        "description" : "Detailed Balance Report",
         "operationId" : "detailedBalanceReport",
         "parameters" : [ {
           "name" : "start_date",
@@ -3355,7 +3401,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 30
         } ],
         "responses" : {
           "200" : {
@@ -3389,7 +3436,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 30
         } ],
         "responses" : {
           "200" : {
@@ -3550,7 +3598,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string"
-          }
+          },
+          "example" : "Bilal"
         } ],
         "responses" : {
           "200" : {
@@ -3624,7 +3673,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 2
         }, {
           "name" : "from_date",
           "in" : "query",
@@ -3681,7 +3731,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 2
         } ],
         "requestBody" : {
           "content" : {
@@ -3833,7 +3884,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 44
         } ],
         "responses" : {
           "200" : {
@@ -3872,7 +3924,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 119
         } ],
         "requestBody" : {
           "content" : {
@@ -3909,7 +3962,7 @@
       "get" : {
         "tags" : [ "Delivery Note" ],
         "summary" : "Show All Delivery Notes.",
-        "description" : "get all devlivery notes",
+        "description" : "get all delivery notes",
         "operationId" : "getDeliveryNotes",
         "parameters" : [ {
           "name" : "limit",
@@ -3979,7 +4032,8 @@
           "explode" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 1
         }, {
           "name" : "delivery_no",
           "in" : "path",
@@ -3989,7 +4043,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 112
         } ],
         "responses" : {
           "200" : {
@@ -4067,7 +4122,7 @@
         "parameters" : [ {
           "name" : "page",
           "in" : "query",
-          "description" : "pagination value , compine with limit",
+          "description" : "pagination value , combine with limit",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -4134,12 +4189,24 @@
           "name" : "type",
           "in" : "query",
           "description" : "Filter with Purchase type -> invoices or orders",
-          "required" : false,
+          "required" : true,
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "integer"
-          }
+            "type" : "string"
+          },
+          "example" : "invoices"
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Filter with Purchase status -> all is default",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "all"
         } ],
         "responses" : {
           "200" : {
@@ -4165,7 +4232,7 @@
       "post" : {
         "tags" : [ "Purchase" ],
         "summary" : "Add Direct Purchase.",
-        "description" : "create new supplier invoice , this api also support robo supplier invoice",
+        "description" : "create new supplier invoice , this api also support robo supplier invoice, or add Fixed Assets Purchase Invoice, just retreive fixed asset items and nothing changed in passed request body",
         "operationId" : "addPurchase",
         "requestBody" : {
           "content" : {
@@ -4446,7 +4513,7 @@
           "style" : "simple",
           "explode" : false,
           "schema" : {
-            "type" : "integer"
+            "type" : "string"
           },
           "example" : "USD"
         } ],
@@ -4457,6 +4524,204 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/responses/OnlineCurrencyRate"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/accruals" : {
+      "post" : {
+        "tags" : [ "Amortization" ],
+        "summary" : "Add Revenue/Cost Accrual.",
+        "description" : "Add Revenue/Cost Accrual",
+        "requestBody" : {
+          "description" : "COMPANY BODY DATA",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Accruals"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/Accruals"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/accruals/trans" : {
+      "get" : {
+        "tags" : [ "Amortization" ],
+        "summary" : "Get transactions per given account.",
+        "description" : "Get transactions for a given Accrued Balance Account to use an amount in Accrual process.",
+        "parameters" : [ {
+          "name" : "act",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/AccrualTransactions"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/process" : {
+      "post" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Process depreciation.",
+        "description" : "Process Fixed assets depreciation.",
+        "requestBody" : {
+          "description" : "Depreciation Body Data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Depreciation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationProcess"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/show_gl" : {
+      "post" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Get GL rows.",
+        "description" : "Get GL rows that will be generated after Process fixed assets depreciation.",
+        "requestBody" : {
+          "description" : "GL rows Body Data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ShowGLRows"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationGLRows"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/starting-month" : {
+      "get" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Get Starting month.",
+        "description" : "Get starting month for depreciation process.",
+        "parameters" : [ {
+          "name" : "stock_id",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationStartingMonth"
                 }
               }
             }
@@ -4564,11 +4829,11 @@
         "properties" : {
           "name" : {
             "type" : "string",
-            "example" : "tmt negm"
+            "example" : "msh alouda"
           },
           "address" : {
             "type" : "string",
-            "example" : "tmt address"
+            "example" : "alouda address"
           },
           "curr_code" : {
             "type" : "string",
@@ -4580,20 +4845,20 @@
           },
           "phone" : {
             "type" : "string",
-            "example" : "11218532"
+            "example" : "1121853232"
           },
           "phone2" : {
             "type" : "string",
-            "example" : "11218532"
+            "example" : "1121853232"
           },
           "email" : {
             "type" : "string",
-            "example" : "mcledger@mcledger.com"
+            "example" : "mcledgeralouda@mcledger.com"
           },
           "cust_ref" : {
             "type" : "string",
             "description" : "customer reference must be unique each time",
-            "example" : "reftmt992a"
+            "example" : "refalouda"
           },
           "sales_type" : {
             "type" : "string",
@@ -4640,12 +4905,12 @@
           "charge" : {
             "type" : "string",
             "description" : "represent the bank charge if exist , but take care bank charge and amount mustn't be the same",
-            "example" : "200"
+            "example" : ""
           },
           "amount" : {
             "type" : "string",
             "description" : "represent the customer payment amount",
-            "example" : "1000"
+            "example" : "2000"
           },
           "DateBanked" : {
             "type" : "string",
@@ -4655,7 +4920,7 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id that we craete the customer payment from",
-            "example" : 161
+            "example" : 109
           },
           "memo_" : {
             "type" : "string",
@@ -4665,12 +4930,12 @@
           "amount0" : {
             "type" : "string",
             "description" : "amount0 represent the first amount of the invoice we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have amout[0-3]",
-            "example" : "100"
+            "example" : ""
           },
           "un_allocated0" : {
             "type" : "string",
             "description" : "un_allocated0 represent the first un_allocated amount or the remaining of the invoice  we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have un_allocated[0-3] , you must get this information from get sales invoice api before start to allocate",
-            "example" : "400"
+            "example" : ""
           }
         }
       },
@@ -4686,7 +4951,7 @@
           "trans_no" : {
             "type" : "integer",
             "description" : "the payment we want to allocate amounts from",
-            "example" : 904
+            "example" : 98
           },
           "trans_type" : {
             "type" : "integer",
@@ -4701,7 +4966,7 @@
           "debtor_no" : {
             "type" : "integer",
             "description" : "customer id that we craete the customer payment from",
-            "example" : 161
+            "example" : 109
           },
           "amount0" : {
             "type" : "string",
@@ -4721,12 +4986,12 @@
         "properties" : {
           "supp_name" : {
             "type" : "string",
-            "example" : "tmt supplier"
+            "example" : "ahmad supplier"
           },
           "supp_ref" : {
             "type" : "string",
             "description" : "supplier reference",
-            "example" : "tmt-sup-ref123"
+            "example" : "ahmad-sup-ref123"
           },
           "bank_account" : {
             "type" : "string",
@@ -4756,7 +5021,7 @@
           "address" : {
             "type" : "string",
             "description" : "mailing address of the supplier",
-            "example" : "tmt@tmt.com "
+            "example" : "ahmad@mcledger.com "
           },
           "supp_address" : {
             "type" : "string",
@@ -4800,6 +5065,34 @@
             "items" : {
               "$ref" : "#/components/schemas/SalesPricing"
             }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "This type to identify is item is normal or fixed assets",
+            "example" : "items"
+          },
+          "depreciation_method" : {
+            "type" : "string",
+            "description" : "Depreciation method for fixed assets,",
+            "example" : "S"
+          },
+          "depreciation_rate" : {
+            "type" : "integer",
+            "description" : "The rate of depreciation of fixed assets, based on depreciation method being selected",
+            "example" : 5
+          },
+          "depreciation_factor" : {
+            "type" : "string",
+            "example" : "0"
+          },
+          "depreciation_start" : {
+            "type" : "string",
+            "example" : "2021/11/09"
+          },
+          "fa_class_id" : {
+            "type" : "string",
+            "description" : "The class ID for fixed asset items",
+            "example" : "001"
           }
         }
       },
@@ -4994,7 +5287,7 @@
           },
           "stock_id" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "41111"
           },
           "curr_abrev" : {
             "type" : "string",
@@ -5014,11 +5307,11 @@
         "properties" : {
           "price" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "99"
           },
           "stock_id" : {
             "type" : "string",
-            "example" : "100"
+            "example" : "411110"
           },
           "curr_abrev" : {
             "type" : "string",
@@ -5050,7 +5343,7 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id",
-            "example" : 161
+            "example" : 109
           },
           "deliver_to" : {
             "type" : "string",
@@ -5060,7 +5353,7 @@
           "ref" : {
             "type" : "string",
             "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
-            "example" : "ref-12399-2"
+            "example" : "099/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -5321,11 +5614,11 @@
           "stock_id" : {
             "type" : "string",
             "description" : "the id of the item",
-            "example" : "1001"
+            "example" : "41122"
           },
           "quantity" : {
             "type" : "integer",
-            "description" : "qunatity of the sales item",
+            "description" : "Valet Parking",
             "example" : 1
           },
           "price" : {
@@ -5336,7 +5629,7 @@
           "discount" : {
             "type" : "string",
             "description" : "discount of the item",
-            "example" : "100"
+            "example" : "10"
           }
         },
         "description" : "line items of the invoices or any transactions"
@@ -5348,12 +5641,12 @@
           "trans_no" : {
             "type" : "string",
             "description" : "the transaction number of the target void transaction",
-            "example" : "42"
+            "example" : "113"
           },
           "type_no" : {
             "type" : "integer",
             "description" : "determine the type of the voided transaction",
-            "example" : 0
+            "example" : 10
           }
         }
       },
@@ -5492,7 +5785,7 @@
           "request_no" : {
             "type" : "integer",
             "description" : "the rms request no , the new  value in request_no column",
-            "example" : 123
+            "example" : 58
           }
         },
         "description" : "update the pwp request fields"
@@ -5515,7 +5808,7 @@
           "salesman_name" : {
             "type" : "string",
             "description" : "the name of the saleman",
-            "example" : "TMT SALESPERSON"
+            "example" : "Ahmad SALESPERSON"
           },
           "provision" : {
             "type" : "integer",
@@ -5532,17 +5825,17 @@
           "salesman_phone" : {
             "type" : "string",
             "description" : "the phone number of the saleman",
-            "example" : "10926"
+            "example" : "1092600"
           },
           "salesman_email" : {
             "type" : "string",
             "description" : "the email of the saleman",
-            "example" : "TMT@SALESPERSON.com"
+            "example" : "ahmad@SALESPERSON.com"
           },
           "salesman_fax" : {
             "type" : "string",
             "description" : "the fax of the saleman",
-            "example" : "TMT FAX"
+            "example" : "ahmad FAX"
           }
         },
         "description" : "add new salesman data"
@@ -5553,7 +5846,7 @@
           "salesman_name" : {
             "type" : "string",
             "description" : "the name of the saleman",
-            "example" : "TMT SALESPERSON"
+            "example" : "ahmad SALESPERSON"
           },
           "provision" : {
             "type" : "integer",
@@ -5570,17 +5863,17 @@
           "salesman_phone" : {
             "type" : "string",
             "description" : "the phone number of the saleman",
-            "example" : "10926"
+            "example" : "1092800"
           },
           "salesman_email" : {
             "type" : "string",
             "description" : "the email of the saleman",
-            "example" : "TMT@SALESPERSON.com"
+            "example" : "ahmad@SALESPERSON.com"
           },
           "salesman_fax" : {
             "type" : "string",
             "description" : "the fax of the saleman",
-            "example" : "TMT FAX"
+            "example" : "ahmad FAX"
           }
         },
         "description" : "add new salesman data"
@@ -6182,13 +6475,12 @@
           "bank_account" : {
             "type" : "integer",
             "description" : "Refund Bank Account",
-            "example" : 1231
+            "example" : 15
           },
           "refund_date" : {
             "type" : "string",
             "description" : "Refund date",
-            "format" : "date",
-            "example" : "2019-06-03"
+            "format" : "date"
           }
         }
       },
@@ -6298,6 +6590,84 @@
           }
         }
       },
+      "Accruals" : {
+        "required" : [ "acc_act", "amount", "date_", "freq", "periods", "res_act" ],
+        "type" : "object",
+        "properties" : {
+          "date_" : {
+            "type" : "string",
+            "example" : "2021/11/26"
+          },
+          "amount" : {
+            "type" : "integer",
+            "example" : 5000
+          },
+          "periods" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "freq" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "accrual description"
+          },
+          "acc_act" : {
+            "type" : "string",
+            "example" : "1152"
+          },
+          "res_act" : {
+            "type" : "string",
+            "example" : "1161"
+          },
+          "dimenstion_id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "dimension2_id" : {
+            "type" : "integer",
+            "example" : 32
+          }
+        }
+      },
+      "Depreciation" : {
+        "required" : [ "months", "stock_id" ],
+        "type" : "object",
+        "properties" : {
+          "stock_id" : {
+            "type" : "string",
+            "example" : "3457890"
+          },
+          "months" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "memo about depreciation process"
+          }
+        }
+      },
+      "ShowGLRows" : {
+        "required" : [ "months", "stock_id" ],
+        "type" : "object",
+        "properties" : {
+          "stock_id" : {
+            "type" : "string",
+            "example" : "3457890"
+          },
+          "months" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "memo"
+          }
+        }
+      },
       "CustomerMulti_inner" : {
         "required" : [ "address", "bank_account", "credit_status", "curr_code", "cust_ref", "name", "payment_terms", "sales_type", "shopifyID", "tax_group_id", "tax_id" ],
         "properties" : {
@@ -6341,7 +6711,7 @@
           "sales_type" : {
             "type" : "string",
             "description" : "price before/after tax",
-            "example" : "1"
+            "example" : "2"
           },
           "payment_terms" : {
             "type" : "string",
