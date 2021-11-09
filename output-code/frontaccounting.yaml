@@ -78,6 +78,15 @@
   }, {
     "name" : "Currency",
     "description" : "All the operation require to manipulate Currency"
+  }, {
+    "name" : "Depreciation",
+    "description" : "Handle process depreciation for Fixed Assets"
+  }, {
+    "name" : "Amortization",
+    "description" : "All actions related to manage Revenue/Cost Accruals"
+  }, {
+    "name" : "Fixed Assets",
+    "description" : "Manage fixed asset items, along with items and fixed asset purchases"
   } ],
   "paths" : {
     "/company" : {
@@ -1356,10 +1365,20 @@
     "/inventory" : {
       "get" : {
         "tags" : [ "Items" ],
-        "summary" : "Get Items List.",
+        "summary" : "Get Items List normal and fixed assets.",
         "description" : "Return all the items supported for the company.",
         "operationId" : "getItems",
         "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "description" : "To identify type of returned items all/items/fixed_assets",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "order",
           "in" : "query",
           "description" : "order by DESC or ASC  with supplier id",
@@ -1427,8 +1446,8 @@
       },
       "post" : {
         "tags" : [ "Items" ],
-        "summary" : "Create New Item",
-        "description" : "Create New Item",
+        "summary" : "Create New Item / Fixed asstes",
+        "description" : "Create New Item for sales/purchase, or create a fixed asset items",
         "operationId" : "addItem",
         "requestBody" : {
           "content" : {
@@ -4213,7 +4232,7 @@
       "post" : {
         "tags" : [ "Purchase" ],
         "summary" : "Add Direct Purchase.",
-        "description" : "create new supplier invoice , this api also support robo supplier invoice",
+        "description" : "create new supplier invoice , this api also support robo supplier invoice, or add Fixed Assets Purchase Invoice, just retreive fixed asset items and nothing changed in passed request body",
         "operationId" : "addPurchase",
         "requestBody" : {
           "content" : {
@@ -4505,6 +4524,204 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/responses/OnlineCurrencyRate"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/accruals" : {
+      "post" : {
+        "tags" : [ "Amortization" ],
+        "summary" : "Add Revenue/Cost Accrual.",
+        "description" : "Add Revenue/Cost Accrual",
+        "requestBody" : {
+          "description" : "COMPANY BODY DATA",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Accruals"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/Accruals"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/accruals/trans" : {
+      "get" : {
+        "tags" : [ "Amortization" ],
+        "summary" : "Get transactions per given account.",
+        "description" : "Get transactions for a given Accrued Balance Account to use an amount in Accrual process.",
+        "parameters" : [ {
+          "name" : "act",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "date",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/AccrualTransactions"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/process" : {
+      "post" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Process depreciation.",
+        "description" : "Process Fixed assets depreciation.",
+        "requestBody" : {
+          "description" : "Depreciation Body Data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Depreciation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationProcess"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/show_gl" : {
+      "post" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Get GL rows.",
+        "description" : "Get GL rows that will be generated after Process fixed assets depreciation.",
+        "requestBody" : {
+          "description" : "GL rows Body Data",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ShowGLRows"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationGLRows"
+                }
+              }
+            }
+          },
+          "403" : {
+            "$ref" : "#/responses/403"
+          }
+        },
+        "security" : [ {
+          "TokenSecured" : [ ]
+        }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/depreciation/starting-month" : {
+      "get" : {
+        "tags" : [ "Depreciation" ],
+        "summary" : "Get Starting month.",
+        "description" : "Get starting month for depreciation process.",
+        "parameters" : [ {
+          "name" : "stock_id",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/DepreciationStartingMonth"
                 }
               }
             }
@@ -4848,6 +5065,34 @@
             "items" : {
               "$ref" : "#/components/schemas/SalesPricing"
             }
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "This type to identify is item is normal or fixed assets",
+            "example" : "items"
+          },
+          "depreciation_method" : {
+            "type" : "string",
+            "description" : "Depreciation method for fixed assets,",
+            "example" : "S"
+          },
+          "depreciation_rate" : {
+            "type" : "integer",
+            "description" : "The rate of depreciation of fixed assets, based on depreciation method being selected",
+            "example" : 5
+          },
+          "depreciation_factor" : {
+            "type" : "string",
+            "example" : "0"
+          },
+          "depreciation_start" : {
+            "type" : "string",
+            "example" : "2021/11/09"
+          },
+          "fa_class_id" : {
+            "type" : "string",
+            "description" : "The class ID for fixed asset items",
+            "example" : "001"
           }
         }
       },
@@ -6342,6 +6587,84 @@
             "items" : {
               "$ref" : "#/components/schemas/SalesKit_components"
             }
+          }
+        }
+      },
+      "Accruals" : {
+        "required" : [ "acc_act", "amount", "date_", "freq", "periods", "res_act" ],
+        "type" : "object",
+        "properties" : {
+          "date_" : {
+            "type" : "string",
+            "example" : "2021/11/26"
+          },
+          "amount" : {
+            "type" : "integer",
+            "example" : 5000
+          },
+          "periods" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "freq" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "accrual description"
+          },
+          "acc_act" : {
+            "type" : "string",
+            "example" : "1152"
+          },
+          "res_act" : {
+            "type" : "string",
+            "example" : "1161"
+          },
+          "dimenstion_id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "dimension2_id" : {
+            "type" : "integer",
+            "example" : 32
+          }
+        }
+      },
+      "Depreciation" : {
+        "required" : [ "months", "stock_id" ],
+        "type" : "object",
+        "properties" : {
+          "stock_id" : {
+            "type" : "string",
+            "example" : "3457890"
+          },
+          "months" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "memo about depreciation process"
+          }
+        }
+      },
+      "ShowGLRows" : {
+        "required" : [ "months", "stock_id" ],
+        "type" : "object",
+        "properties" : {
+          "stock_id" : {
+            "type" : "string",
+            "example" : "3457890"
+          },
+          "months" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "memo_" : {
+            "type" : "string",
+            "example" : "memo"
           }
         }
       },
