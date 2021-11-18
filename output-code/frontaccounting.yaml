@@ -663,7 +663,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 102
+          "example" : 112
         } ],
         "responses" : {
           "200" : {
@@ -701,7 +701,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 109
+          "example" : 112
         } ],
         "requestBody" : {
           "description" : "customer data body",
@@ -1014,7 +1014,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 98
+          "example" : 107
         } ],
         "responses" : {
           "200" : {
@@ -1157,7 +1157,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 100
+          "example" : 45
         } ],
         "requestBody" : {
           "description" : "Allocate payment details",
@@ -2027,7 +2027,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 114
+          "example" : 128
         }, {
           "name" : "template_id",
           "in" : "query",
@@ -2408,7 +2408,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 136
         } ],
         "requestBody" : {
           "content" : {
@@ -2451,7 +2452,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 136
         } ],
         "responses" : {
           "200" : {
@@ -2526,7 +2528,8 @@
           "explode" : false,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 135
         } ],
         "responses" : {
           "200" : {
@@ -4824,12 +4827,12 @@
         }
       },
       "Customer" : {
-        "required" : [ "address", "bank_account", "curr_code", "cust_ref", "name", "payment_terms", "sales_type", "tax_sub_location_id" ],
+        "required" : [ "address", "bank_account", "curr_code", "cust_ref", "name", "payment_terms", "sales_type", "tax_group_id", "tax_id", "tax_sub_location_id" ],
         "type" : "object",
         "properties" : {
           "name" : {
             "type" : "string",
-            "example" : "msh alouda"
+            "example" : "yazan alouda"
           },
           "address" : {
             "type" : "string",
@@ -4845,11 +4848,11 @@
           },
           "phone" : {
             "type" : "string",
-            "example" : "1121853232"
+            "example" : "11218535232"
           },
           "phone2" : {
             "type" : "string",
-            "example" : "1121853232"
+            "example" : "11218535232"
           },
           "email" : {
             "type" : "string",
@@ -4858,7 +4861,7 @@
           "cust_ref" : {
             "type" : "string",
             "description" : "customer reference must be unique each time",
-            "example" : "refalouda"
+            "example" : "ref-yazan"
           },
           "sales_type" : {
             "type" : "string",
@@ -4870,10 +4873,14 @@
             "description" : "cash only  , after 15 day  , on account",
             "example" : "4"
           },
+          "tax_group_id" : {
+            "type" : "string",
+            "description" : "tax group id",
+            "example" : "1"
+          },
           "tax_sub_location_id" : {
             "type" : "integer",
-            "description" : "Tax sub location id, it's FTA related.",
-            "example" : 2
+            "description" : "Tax sub location id, it's FTA related."
           }
         }
       },
@@ -4920,7 +4927,7 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id that we craete the customer payment from",
-            "example" : 109
+            "example" : 112
           },
           "memo_" : {
             "type" : "string",
@@ -4951,12 +4958,16 @@
           "trans_no" : {
             "type" : "integer",
             "description" : "the payment we want to allocate amounts from",
-            "example" : 98
+            "example" : 106
           },
           "trans_type" : {
             "type" : "integer",
             "description" : "12 for customer payment make it static like that in the code",
             "example" : 12
+          },
+          "amount" : {
+            "type" : "string",
+            "example" : "1200"
           },
           "DateBanked" : {
             "type" : "string",
@@ -4971,12 +4982,12 @@
           "amount0" : {
             "type" : "string",
             "description" : "amount0 represent the first amount of the invoice we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have amout[0-3]",
-            "example" : "100"
+            "example" : "600"
           },
           "un_allocated0" : {
             "type" : "string",
             "description" : "un_allocated0 represent the first un_allocated amount or the remaining of the invoice  we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have un_allocated[0-3] , you must get this information from get sales invoice api before start to allocate",
-            "example" : "205"
+            "example" : "600"
           }
         }
       },
@@ -5343,17 +5354,17 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id",
-            "example" : 109
+            "example" : 112
           },
           "deliver_to" : {
             "type" : "string",
             "description" : "customer name , or any kind of string specify who will accept the invoice",
-            "example" : "Abbas Ali"
+            "example" : "yazan alouda"
           },
           "ref" : {
             "type" : "string",
             "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
-            "example" : "099/2021"
+            "example" : "107/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -5582,7 +5593,7 @@
           "customer_name" : {
             "type" : "string",
             "description" : "customer name , the api will looking for someone has the same name and get it's id",
-            "example" : "Abbas"
+            "example" : "yazan"
           },
           "payment_term_text" : {
             "type" : "string",
@@ -5641,7 +5652,7 @@
           "trans_no" : {
             "type" : "string",
             "description" : "the transaction number of the target void transaction",
-            "example" : "113"
+            "example" : "126"
           },
           "type_no" : {
             "type" : "integer",
@@ -5736,22 +5747,22 @@
           "customer_id" : {
             "type" : "integer",
             "description" : "customer id",
-            "example" : 161
+            "example" : 112
           },
           "deliver_to" : {
             "type" : "string",
             "description" : "customer name , or any kind of string specify who will accept the invoice",
-            "example" : "Abbas Ali"
+            "example" : "yazan alouda"
           },
           "cust_ref" : {
             "type" : "string",
             "description" : "customer reference , or it's unqiue name",
-            "example" : "general customer"
+            "example" : "ref-yazan"
           },
           "ref" : {
             "type" : "string",
             "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
-            "example" : "ref-12399-2"
+            "example" : "007/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -6475,7 +6486,7 @@
           "bank_account" : {
             "type" : "integer",
             "description" : "Refund Bank Account",
-            "example" : 15
+            "example" : 22
           },
           "refund_date" : {
             "type" : "string",
