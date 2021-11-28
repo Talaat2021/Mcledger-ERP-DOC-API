@@ -2724,6 +2724,38 @@
         } ]
       }
     },
+    "/zatca" : {
+      "post" : {
+        "tags" : [ "Settings" ],
+        "summary" : "Generate ZATCA QR Code.",
+        "description" : "Get ZATCA QR code as a data image",
+        "operationId" : "getZATCAQR",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ZATCARequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/ZATCA"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
     "/pwp-request" : {
       "get" : {
         "tags" : [ "PWP-REQUESTS" ],
@@ -5800,6 +5832,37 @@
           }
         },
         "description" : "update the pwp request fields"
+      },
+      "ZATCARequest" : {
+        "required" : [ "date", "seller_name", "tax_amount", "tax_number", "total_amount" ],
+        "type" : "object",
+        "properties" : {
+          "seller_name" : {
+            "type" : "string",
+            "description" : "The seller name represent the company name.",
+            "example" : "MCledger"
+          },
+          "tax_number" : {
+            "type" : "string",
+            "description" : "TRN number regarding the tax.",
+            "example" : "29292929"
+          },
+          "total_amount" : {
+            "type" : "number",
+            "description" : "Total amount of the invoice include the tax",
+            "example" : 100
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Invoice Date.",
+            "example" : "2021/20/10"
+          },
+          "tax_amount" : {
+            "type" : "number",
+            "description" : "Invoice Tax amount",
+            "example" : 10
+          }
+        }
       },
       "NonGLModuleType" : {
         "type" : "object",
