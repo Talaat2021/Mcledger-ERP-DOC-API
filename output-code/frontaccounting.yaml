@@ -647,7 +647,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 102
+          "example" : 112
         } ],
         "responses" : {
           "200" : {
@@ -683,7 +683,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 109
+          "example" : 112
         } ],
         "requestBody" : {
           "content" : {
@@ -976,7 +976,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 98
+          "example" : 107
         } ],
         "responses" : {
           "200" : {
@@ -1117,7 +1117,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 100
+          "example" : 45
         } ],
         "requestBody" : {
           "content" : {
@@ -1919,7 +1919,7 @@
           "schema" : {
             "type" : "integer"
           },
-          "example" : 114
+          "example" : 128
         }, {
           "name" : "template_id",
           "in" : "query",
@@ -2276,7 +2276,8 @@
           "required" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 136
         } ],
         "requestBody" : {
           "content" : {
@@ -2317,7 +2318,8 @@
           "required" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 136
         } ],
         "responses" : {
           "200" : {
@@ -2386,7 +2388,8 @@
           "required" : true,
           "schema" : {
             "type" : "integer"
-          }
+          },
+          "example" : 135
         } ],
         "responses" : {
           "200" : {
@@ -2571,6 +2574,38 @@
         "security" : [ {
           "TokenSecured" : [ ]
         }, {
+          "X-PREFIX" : [ ]
+        } ]
+      }
+    },
+    "/zatca" : {
+      "post" : {
+        "tags" : [ "Settings" ],
+        "summary" : "Generate ZATCA QR Code.",
+        "description" : "Get ZATCA QR code as a data image",
+        "operationId" : "getZATCAQR",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ZATCARequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/responses/ZATCA"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
           "X-PREFIX" : [ ]
         } ]
       }
@@ -4583,12 +4618,13 @@
         }
       },
       "Customer" : {
+        "required" : [ "address", "bank_account", "curr_code", "cust_ref", "name", "payment_terms", "sales_type", "tax_group_id", "tax_id", "tax_sub_location_id" ],
         "type" : "object",
         "required" : [ "address", "bank_account", "curr_code", "cust_ref", "name", "payment_terms", "sales_type", "tax_sub_location_id" ],
         "properties" : {
           "name" : {
             "type" : "string",
-            "example" : "msh alouda"
+            "example" : "yazan alouda"
           },
           "address" : {
             "type" : "string",
@@ -4604,11 +4640,11 @@
           },
           "phone" : {
             "type" : "string",
-            "example" : 1121853232
+            "example" : "11218535232"
           },
           "phone2" : {
             "type" : "string",
-            "example" : 1121853232
+            "example" : "11218535232"
           },
           "email" : {
             "type" : "string",
@@ -4616,8 +4652,8 @@
           },
           "cust_ref" : {
             "type" : "string",
-            "example" : "refalouda",
-            "description" : "customer reference must be unique each time"
+            "description" : "customer reference must be unique each time",
+            "example" : "ref-yazan"
           },
           "sales_type" : {
             "type" : "string",
@@ -4628,6 +4664,11 @@
             "type" : "string",
             "example" : "4",
             "description" : "cash only  , after 15 day  , on account"
+          },
+          "tax_group_id" : {
+            "type" : "string",
+            "description" : "tax group id",
+            "example" : "1"
           },
           "tax_sub_location_id" : {
             "type" : "integer",
@@ -4733,8 +4774,8 @@
           },
           "customer_id" : {
             "type" : "integer",
-            "example" : 109,
-            "description" : "customer id that we craete the customer payment from"
+            "description" : "customer id that we craete the customer payment from",
+            "example" : 112
           },
           "memo_" : {
             "type" : "string",
@@ -4764,13 +4805,17 @@
           },
           "trans_no" : {
             "type" : "integer",
-            "example" : 98,
-            "description" : "the payment we want to allocate amounts from"
+            "description" : "the payment we want to allocate amounts from",
+            "example" : 106
           },
           "trans_type" : {
             "type" : "integer",
             "example" : 12,
             "description" : "12 for customer payment make it static like that in the code"
+          },
+          "amount" : {
+            "type" : "string",
+            "example" : "1200"
           },
           "DateBanked" : {
             "type" : "string",
@@ -4785,13 +4830,13 @@
           },
           "amount0" : {
             "type" : "string",
-            "example" : "100",
-            "description" : "amount0 represent the first amount of the invoice we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have amout[0-3]"
+            "description" : "amount0 represent the first amount of the invoice we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have amout[0-3]",
+            "example" : "600"
           },
           "un_allocated0" : {
             "type" : "string",
-            "example" : "205",
-            "description" : "un_allocated0 represent the first un_allocated amount or the remaining of the invoice  we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have un_allocated[0-3] , you must get this information from get sales invoice api before start to allocate"
+            "description" : "un_allocated0 represent the first un_allocated amount or the remaining of the invoice  we want to allocate the payment for , if TotalNumberOfAllocs = 4  , then we would have un_allocated[0-3] , you must get this information from get sales invoice api before start to allocate",
+            "example" : "600"
           }
         }
       },
@@ -5210,18 +5255,18 @@
           },
           "customer_id" : {
             "type" : "integer",
-            "example" : 109,
-            "description" : "customer id"
+            "description" : "customer id",
+            "example" : 112
           },
           "deliver_to" : {
             "type" : "string",
-            "example" : "Abbas Ali",
-            "description" : "customer name , or any kind of string specify who will accept the invoice"
+            "description" : "customer name , or any kind of string specify who will accept the invoice",
+            "example" : "yazan alouda"
           },
           "ref" : {
             "type" : "string",
-            "example" : "099/2021",
-            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern"
+            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
+            "example" : "107/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -5453,8 +5498,8 @@
           },
           "customer_name" : {
             "type" : "string",
-            "example" : "Abbas",
-            "description" : "customer name , the api will looking for someone has the same name and get it's id"
+            "description" : "customer name , the api will looking for someone has the same name and get it's id",
+            "example" : "yazan"
           },
           "payment_term_text" : {
             "type" : "string",
@@ -5512,8 +5557,8 @@
         "properties" : {
           "trans_no" : {
             "type" : "string",
-            "example" : "113",
-            "description" : "the transaction number of the target void transaction"
+            "description" : "the transaction number of the target void transaction",
+            "example" : "126"
           },
           "type_no" : {
             "type" : "integer",
@@ -5611,23 +5656,23 @@
           },
           "customer_id" : {
             "type" : "integer",
-            "example" : 161,
-            "description" : "customer id"
+            "description" : "customer id",
+            "example" : 112
           },
           "deliver_to" : {
             "type" : "string",
-            "example" : "Abbas Ali",
-            "description" : "customer name , or any kind of string specify who will accept the invoice"
+            "description" : "customer name , or any kind of string specify who will accept the invoice",
+            "example" : "yazan alouda"
           },
           "cust_ref" : {
             "type" : "string",
-            "example" : "general customer",
-            "description" : "customer reference , or it's unqiue name"
+            "description" : "customer reference , or it's unqiue name",
+            "example" : "ref-yazan"
           },
           "ref" : {
             "type" : "string",
-            "example" : "ref-12399-2",
-            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern"
+            "description" : "invoice reference must be unqiue reference each time we insert it , it's not required if we did not pass it the invoice will generate a unique ref depend on ERP pattern",
+            "example" : "007/2021"
           },
           "payment" : {
             "type" : "integer",
@@ -5665,6 +5710,37 @@
           }
         },
         "description" : "update the pwp request fields"
+      },
+      "ZATCARequest" : {
+        "required" : [ "date", "seller_name", "tax_amount", "tax_number", "total_amount" ],
+        "type" : "object",
+        "properties" : {
+          "seller_name" : {
+            "type" : "string",
+            "description" : "The seller name represent the company name.",
+            "example" : "MCledger"
+          },
+          "tax_number" : {
+            "type" : "string",
+            "description" : "TRN number regarding the tax.",
+            "example" : "29292929"
+          },
+          "total_amount" : {
+            "type" : "number",
+            "description" : "Total amount of the invoice include the tax",
+            "example" : 100
+          },
+          "date" : {
+            "type" : "string",
+            "description" : "Invoice Date.",
+            "example" : "2021/20/10"
+          },
+          "tax_amount" : {
+            "type" : "number",
+            "description" : "Invoice Tax amount",
+            "example" : 10
+          }
+        }
       },
       "NonGLModuleType" : {
         "type" : "object",
@@ -6352,8 +6428,8 @@
         "properties" : {
           "bank_account" : {
             "type" : "integer",
-            "example" : 15,
-            "description" : "Refund Bank Account"
+            "description" : "Refund Bank Account",
+            "example" : 22
           },
           "refund_date" : {
             "type" : "string",
